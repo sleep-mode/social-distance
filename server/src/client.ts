@@ -31,7 +31,6 @@ function Client() {
           }
         },
         broadcast: function (eventName, data) {
-          console.log('broadcast', data);
           Object.keys(ctx.SOCKET_CLIENTS).map(function (cid) {
             if (cid != id) {
               ctx.SOCKET_CLIENTS[cid].send(Buffer.from(JSON.stringify({ event: eventName, message: data })));
