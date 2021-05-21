@@ -13,4 +13,7 @@ dist
 # Ignore yarn error log
 yarn-error.log
 
+# Don't use yarn
+yarn.lock
+
 .cache
