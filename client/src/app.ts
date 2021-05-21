@@ -2,6 +2,7 @@
 import { io } from 'socket.io-client';
 import { Game } from './game';
 import { ctx } from './context';
+import { handleNetwork } from './handleNetwork';
 
 //
 
@@ -52,7 +53,6 @@ let actualTicks = 0;
 //
 
 const game = new Game();
-
 //
 
 function startGame() {
@@ -60,13 +60,14 @@ function startGame() {
   (document as any).getElementById('gameAreaWrapper').style.display = 'block';
   (document as any).getElementById('startMenuWrapper').style.display = 'none';
 
-  ctx.playerName = ctx.playerNameInput.value.replace(/(<([^>]+)>)/ig, '');
+  ctx.playerName = ctx.playerNameInput.value.replace(/(<([^>]+)>)/gi, '');
 
   //Set up socket
   const socket = io(ctx.serverInput.value, { transports: ['websocket'] });
   ctx.socket = socket;
 
-  game.handleNetwork(socket);
+  handleNetwork(socket, game);
+  game.start();
 
   //Start loop
   windowLoop();
