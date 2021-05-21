@@ -2,7 +2,7 @@ import express from 'express';
 import http from 'http';
 import { Server } from 'socket.io';
 import { handleConnection } from './handleConnection';
-import createGameServer from './game/createGameServer';
+import { GameServer } from './game/createGameServer';
 
 export async function bootstrap() {
   const app = express();
@@ -13,9 +13,10 @@ export async function bootstrap() {
       methods: ['GET', 'POST'],
     },
   });
-  const gameServer = createGameServer();
+  const gameServer = new GameServer();
 
   handleConnection(io, gameServer);
 
+  gameServer.start();
   return server;
 }
