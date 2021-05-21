@@ -4,7 +4,7 @@ import { startLoop } from './loop';
 
 export class GameServer {
   start() {
-    startLoop(60);
+    startLoop();
   }
 
   onConnect(socket: Socket) {
@@ -22,7 +22,9 @@ export class GameServer {
     switch (action) {
       case 'playerDirection': {
         const player = clientManager.getPlayerById(params.clientId);
-        player.changeDirection();
+        if (player) {
+          player.changeDirection();
+        }
         break;
       }
     }

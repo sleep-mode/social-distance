@@ -42,6 +42,22 @@ class ClientManager {
   getPlayerById(socketId: string) {
     return ctx.players[socketId];
   }
+
+  broadcast() {
+    const state = serializeState(Object.values(ctx.players));
+
+    for (const socket of Object.values(ctx.sockets)) {
+      socket.send(state);
+    }
+  }
 }
 
 export const clientManager = new ClientManager();
+
+function serializeState(players: Player[]) {
+  return Buffer.from(
+    JSON.stringify({
+      players,
+    })
+  );
+}

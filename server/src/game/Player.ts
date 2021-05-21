@@ -1,3 +1,4 @@
+import { config } from '../config';
 interface PlayerProps {
   socketId: string;
   nickname: string;
@@ -6,8 +7,6 @@ interface PlayerProps {
   coin: number;
   direction?: number; // 1 is right, 0 is left;
 }
-
-const speed = 300;
 
 export class Player {
   socketId: string;
@@ -31,6 +30,14 @@ export class Player {
   }
 
   update(delta: number) {
-    this.x += delta * this.x * speed;
+    this.x = this.x + this.direction * delta * config.speed;
+
+    if (this.direction > 0 && this.x > config.mapWidth) {
+      this.x = this.x % config.mapWidth;
+    }
+
+    if (this.direction < 0 && this.x < 0) {
+      this.x = config.mapWidth;
+    }
   }
 }

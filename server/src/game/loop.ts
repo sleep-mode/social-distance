@@ -1,14 +1,16 @@
+import { clientManager } from '../client';
 import { update } from './update';
+import { config } from '../config';
 
 /**
  * Main server logic - handle everything game-related here
  */
-export function startLoop(frameRate = 60) {
+export function startLoop() {
   /**
     Length of a tick in milliseconds. The denominator is your desired framerate.
     e.g. 1000 / 20 = 20 fps,  1000 / 60 = 60 fps
     */
-  const tickLengthMs = 1000 / frameRate;
+  const tickLengthMs = 1000 / config.frameRate;
 
   /* gameLoop related letiables */
   // timestamp of each loop
@@ -28,6 +30,7 @@ export function startLoop(frameRate = 60) {
        *  had a very busy time.
        */
       update(delta);
+      clientManager.broadcast();
     }
 
     if (Date.now() - previousTick < tickLengthMs - 16) {
