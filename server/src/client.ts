@@ -1,50 +1,63 @@
 import { Socket } from 'socket.io';
 import { ctx } from './context';
+import { Player } from './game/Player';
 
 class ClientManager {
   add(socket: Socket) {
-    ctx.SOCKET_CLIENTS[socket.id] = socket;
-    ctx.CLIENT_DATA[socket.id] = {};
+    ctx.sockets[socket.id] = socket;
+    ctx.players[socket.id] = new Player({
+      socketId: socket.id,
+      nickname: 'foo',
+      coin: 0,
+      x: 30,
+      y: 300,
+    });
+  }
+
+  getPlayers() {
+    return Object.values(ctx.players);
   }
 
   remove(socketId: string) {
-    delete ctx.SOCKET_CLIENTS[socketId];
-    delete ctx.CLIENT_DATA[socketId];
+    delete ctx.sockets[socketId];
+    delete ctx.players[socketId];
   }
 
   count() {
-    return Object.keys(ctx.SOCKET_CLIENTS).length;
+    return Object.keys(ctx.sockets).length;
+  }
+
+  exist(socketId: string) {
+    return ctx.players[socketId] !== undefined;
   }
 
   all() {
-    return Object.keys(ctx.SOCKET_CLIENTS);
+    return Object.keys(ctx.sockets);
   }
 
   allData() {
-    return ctx.CLIENT_DATA;
+    return ctx.players;
   }
 
-  get(socketId: string) {
-    if (!ctx.SOCKET_CLIENTS[socketId]) return null;
+  getPlayerById(socketId: string) {
+    return ctx.players[socketId];
+  }
 
-    return {
-      data: function () {
-        return ctx.CLIENT_DATA[socketId];
-      },
-      emit: function (eventName, data) {
-        if (ctx.SOCKET_CLIENTS[socketId]) {
-          ctx.SOCKET_CLIENTS[socketId].send(Buffer.from(JSON.stringify({ event: eventName, message: data })));
-        }
-      },
-      broadcast: function (eventName, data) {
-        Object.keys(ctx.SOCKET_CLIENTS).map(function (cid) {
-          if (cid != socketId) {
-            ctx.SOCKET_CLIENTS[cid].send(Buffer.from(JSON.stringify({ event: eventName, message: data })));
-          }
-        });
-      },
-    };
+  broadcast() {
+    const state = serializeState(Object.values(ctx.players));
+
+    for (const socket of Object.values(ctx.sockets)) {
+      socket.send(state);
+    }
   }
 }
 
 export const clientManager = new ClientManager();
+
+function serializeState(players: Player[]) {
+  return Buffer.from(
+    JSON.stringify({
+      players,
+    })
+  );
+}

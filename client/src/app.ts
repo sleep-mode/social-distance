@@ -4,20 +4,6 @@ import { Game } from './game';
 import { ctx } from './context';
 import { handleNetwork } from './handleNetwork';
 
-//
-
-//Define animation frame
-const requestAnimFrame = (function () {
-  return (
-    (window as any).requestAnimationFrame ||
-    (window as any).webkitRequestAnimationFrame ||
-    (window as any).mozRequestAnimationFrame ||
-    function (callback) {
-      (window as any).setTimeout(callback, 1000 / 60);
-    }
-  );
-})();
-
 let screenWidth = (window as any).innerWidth;
 let screenHeight = (window as any).innerHeight;
 
@@ -35,24 +21,20 @@ const PIXEL_RATIO = (function () {
   return dpr / bsr;
 })();
 
-const c: any = (document as any).getElementById('cvs');
-const canvas: any = c.getContext('2d');
+const c: HTMLCanvasElement = (document as any).getElementById('cvs');
+const canvas = c.getContext('2d')!;
 const ratio: any = PIXEL_RATIO;
 c.width = screenWidth * ratio;
 c.height = screenHeight * ratio;
 c.style.width = screenWidth + 'px';
 c.style.height = screenHeight + 'px';
-c.getContext('2d').setTransform(ratio, 0, 0, ratio, 0, 0);
+canvas.setTransform(ratio, 0, 0, ratio, 0, 0);
 
 const KEY_ENTER = 13;
 
-const tickLengthMs = 1000 / 60;
-let previousTick = Date.now();
-let actualTicks = 0;
-
 //
 
-const game = new Game();
+const game = new Game(canvas);
 //
 
 function startGame() {
@@ -70,24 +52,7 @@ function startGame() {
   game.start();
 
   //Start loop
-  windowLoop();
-}
-
-function windowLoop() {
-  requestAnimFrame(windowLoop);
-  gameLoop();
-}
-
-function gameLoop() {
-  const now = Date.now();
-  actualTicks++;
-  game.handleGraphics(canvas);
-  if (previousTick + tickLengthMs <= now) {
-    const delta = (now - previousTick) / 1000;
-    previousTick = now;
-    game.handleLogic(delta);
-    actualTicks = 0;
-  }
+  // windowLoop();
 }
 
 //Check nick and start game

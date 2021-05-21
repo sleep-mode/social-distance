@@ -8,31 +8,13 @@ export function handleNetwork(socket: Socket, game: Game) {
   console.log('HandleNetwork!');
 
   socket.on('connect', function () {
-    console.log('on - open');
+    ctx.clientId = socket.id;
 
     socket.on('message', function (data) {
-      console.log('on-message', data);
-
-      const msg = JSON.parse(BufferUtil().toString(data));
-      console.log(msg);
-      if (msg.event == 'welcome') {
-        ctx.clientId = msg.message.id;
-        game.updatePlayerList(msg.message.players);
-        console.log('All players', this.players);
-      }
-      if (msg.event == 'playerJoin') {
-        game.updatePlayerList(msg.message.players);
-        console.log('New player joined', this.players);
-      }
-      if (msg.event == 'updatePlayerDirection') {
-        game.players[msg.message.player] = {
-          x: msg.message.x,
-          y: msg.message.y,
-          direction: msg.message.direction,
-        };
-      }
-      if (msg.event == 'playerDisconnect') {
-        delete game.players[msg.message.player];
+      const msg: any = JSON.parse(BufferUtil().toString(data));
+      if (msg.players) {
+        game.players = msg.players;
+        game.draw();
       }
     });
     socket.on('close', function () {});
