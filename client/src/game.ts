@@ -2,6 +2,7 @@ import { BufferUtil } from './utils/buffer-until';
 import { ctx } from './context';
 import { emit } from './emit';
 import { Socket } from 'socket.io-client';
+import BackgroundImage from "../img/bg.png";
 
 export function Game() {
   const self = this;
@@ -90,11 +91,15 @@ Game.prototype.handleGraphics = function (graphics) {
   //Draw loop
   const self = this;
 
-  graphics.fillStyle = '#333333';
-  graphics.fillRect(0, 0, window.innerWidth, window.innerHeight);
+  const background = new Image();
+  background.src = BackgroundImage;
 
+  // Make sure the image is loaded first otherwise nothing will draw.
+  background.onload = function(){
+    graphics.drawImage(background, 0, 0, window.innerWidth, window.innerHeight);
+  }
   graphics.fillStyle = '#222';
-  graphics.fillRect(0, 40, 300, 20);
+  graphics.fillRect(0, 400, window.innerWidth, 200);
 
   for (let i = 0; i < Object.keys(self.players).length; i++) {
     graphics.beginPath();
@@ -105,7 +110,7 @@ Game.prototype.handleGraphics = function (graphics) {
     } else {
       graphics.fillStyle = '#f00';
     }
-    graphics.arc(parseInt(self.players[pid].x), parseInt(self.players[pid].y), 3, 0, Math.PI * 2, true);
+    graphics.arc(parseInt(self.players[pid].x), 500, 3, 0, Math.PI * 2, true);
     graphics.fill();
   }
 
