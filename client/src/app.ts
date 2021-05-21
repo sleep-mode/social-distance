@@ -1,7 +1,6 @@
 // import eio from 'engine.io-client';
 import { io } from 'socket.io-client';
 import { Game } from './game';
-import { BufferUtil } from './utils/buffer-until';
 import { ctx } from './context';
 
 //
@@ -64,7 +63,7 @@ function startGame() {
   ctx.playerName = ctx.playerNameInput.value.replace(/(<([^>]+)>)/ig, '');
 
   //Set up socket
-  const socket = io('http://localhost:5000', { transports: ['websocket'] });
+  const socket = io(ctx.serverInput.value, { transports: ['websocket'] });
   ctx.socket = socket;
 
   game.handleNetwork(socket);
@@ -113,6 +112,7 @@ function validNick() {
   ctx.btn = (document as any).getElementById('startButton');
   ctx.nickErrorText = (document as any).querySelector('#startMenu .input-error');
   ctx.playerNameInput = (document as any).getElementById('playerNameInput');
+  ctx.serverInput = (document as any).getElementById('serverInput');
 
   ctx.btn.onclick = checkNick; //Check nick on click
 
