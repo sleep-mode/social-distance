@@ -61,7 +61,7 @@ function startGame() {
   (document as any).getElementById('gameAreaWrapper').style.display = 'block';
   (document as any).getElementById('startMenuWrapper').style.display = 'none';
 
-  ctx.playerName = ctx.playerNameInput.value.replace(/(<([^>]+)>)/gi, '');
+  ctx.playerName = "test";
 
   //Set up socket
   const socket = io('http://localhost:5000', { transports: ['websocket'] });
@@ -110,6 +110,7 @@ function validNick() {
 (window as any).onload = function () {
   'use strict';
 
+  startGame();
   ctx.btn = (document as any).getElementById('startButton');
   ctx.nickErrorText = (document as any).querySelector('#startMenu .input-error');
   ctx.playerNameInput = (document as any).getElementById('playerNameInput');
