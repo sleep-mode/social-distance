@@ -4,10 +4,10 @@ import { GameServer } from './game/GameServer';
 
 export function handleConnection(io: Server, gameServer: GameServer) {
   io.on('connection', function (socket: Socket) {
-    if (!clientManager.get(socket.id)) {
+    if (!clientManager.exist(socket.id)) {
       clientManager.add(socket);
     }
-    gameServer.onConnect(socket.id);
+    gameServer.onConnect(socket);
 
     socket.on('message', function (data) {
       const stringified = data.toString('utf-8').replace(/\0/g, ''); //Take \0 ending character into account
@@ -16,7 +16,7 @@ export function handleConnection(io: Server, gameServer: GameServer) {
     });
 
     socket.on('disconnect', function () {
-      if (clientManager.get(socket.id)) {
+      if (clientManager.exist(socket.id)) {
         gameServer.onDisconnect(socket.id);
         clientManager.remove(socket.id);
       }
