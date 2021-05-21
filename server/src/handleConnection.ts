@@ -1,6 +1,6 @@
 import { Socket, Server } from 'socket.io';
 import { clientManager } from './client';
-import { GameServer } from './game/createGameServer';
+import { GameServer } from './game/GameServer';
 
 export function handleConnection(io: Server, gameServer: GameServer) {
   io.on('connection', function (socket: Socket) {

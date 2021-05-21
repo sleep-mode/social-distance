@@ -2,7 +2,7 @@ import express from 'express';
 import http from 'http';
 import { Server } from 'socket.io';
 import { handleConnection } from './handleConnection';
-import { GameServer } from './game/createGameServer';
+import { GameServer } from './game/GameServer';
 
 export async function bootstrap() {
   const app = express();

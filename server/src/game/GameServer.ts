@@ -28,14 +28,17 @@ export class GameServer {
     }
   }
 
-  onMessage(action: string, params: Record<string, string>) {
+  /**
+   * Client Action Handler
+   */
+  onMessage(action: string, params: Record<string, string> & { clientId: string }) {
     console.log('Server received');
-    console.log('Event:', action, 'Message:', params);
+    console.log('Action:', action, 'Params:', params);
     switch (action) {
       case 'playerDirection': {
         const client = clientManager.get(params.clientId);
         if (client) {
-          client.data().player.direction = params.direction;
+          client.data().player.direction = params.clientId;
           client.broadcast('updatePlayerDirection', {
             player: params.clientId,
             x: client.data().player.x,
