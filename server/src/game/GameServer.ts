@@ -2,8 +2,8 @@ import { Socket, Server } from 'socket.io';
 import { Connections } from './Connections';
 import { GameState } from './GameState';
 import { loop } from './loop';
-import { config } from '../config';
 import { handleMessage } from './handler';
+import { updateCoinGeneration, updateCollision, broadcastState, updatePlayerLocation } from './updater';
 
 export class GameServer {
   constructor(
@@ -19,7 +19,7 @@ export class GameServer {
 
   private startLoop() {
     const { io, state } = this;
-    loop(updatePlayerLocation(state), broadcastState(state, io));
+    loop(updatePlayerLocation(state), updateCollision(state), updateCoinGeneration(state), broadcastState(state, io));
   }
 
   private handleConnect() {

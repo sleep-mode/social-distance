@@ -2,6 +2,7 @@ import { GameState } from '../GameState';
 import { Server } from 'socket.io';
 import { config } from '../../config';
 import { Coin } from '../entity/Coin';
+import { Player, PlayerType } from '../entity/Player';
 
 const MAX_COIN_COUNT = 30;
 
@@ -20,9 +21,7 @@ export function updatePlayerLocation(state: GameState) {
  * 충돌처리
  */
 export function updateCollision(state: GameState) {
-  return () => {
-    //
-  };
+  return () => {};
 }
 
 /**
