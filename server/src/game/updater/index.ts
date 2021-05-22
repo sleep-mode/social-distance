@@ -24,18 +24,7 @@ export function updateCollision(state: GameState) {
   return () => {
     const players = Object.values(state.players).sort((a, b) => a.x - b.x);
 
-    /** Deadcells 계산 */
-    for (const player of players) {
-      const pos = Math.round(player.x / 50);
-      /** cell에 value가 4 이상이면 감염 */
-      if (player.type === PlayerType.ALIVE) {
-        deadCells[pos]++;
-      } else if (player.type === PlayerType.ZOMBIE) {
-        deadCells[pos] = deadCells[pos] + 4;
-      }
-    }
-
-    /** HP 감소될 player 처리 */
+    /** HP 감소 */
     const playersToBeDamaged: Player[] = [];
     for (let i = 0; i < players.length; i++) {
       const player = players[i];
