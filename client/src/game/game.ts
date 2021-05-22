@@ -147,7 +147,6 @@ export class Game {
 
     this.flush(this.objectCanvas);
     this.drawObjects();
-    this.drawInfo();
   }
 
   flush(canvas: Canvas) {
@@ -165,14 +164,5 @@ export class Game {
     for (const key in this.players) {
       this.players[key].draw(this.objectCanvas);
     }
-  }
-
-  drawInfo() {
-    // const context = this.canvas.context;
-    // context.fillStyle = '#FFF';
-    // context.font = '12px Tahoma';
-    // const playerCount = Object.keys(this.players).length;
-    // context.fillText('Total players: ' + playerCount, 10, 10);
-    // context.fillText('Score: ' + score, 10, 20);
   }
 }
