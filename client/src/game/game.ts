@@ -94,7 +94,7 @@ export class Game {
       return;
     }
 
-    this.flush();
+    //this.flush();
     this.drawObjects();
     this.drawInfo();
   }
