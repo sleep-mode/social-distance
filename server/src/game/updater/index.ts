@@ -2,7 +2,7 @@ import { GameState } from '../GameState';
 import { Server } from 'socket.io';
 import { config } from '../../config';
 import { Coin, createCoin } from '../entity/Coin';
-import { PlayerType } from '../entity/Player';
+import { Player, PlayerType } from '../entity/Player';
 
 const MAX_COIN_COUNT = 30;
 
@@ -21,11 +21,7 @@ export function updatePlayerLocation(state: GameState) {
  * 충돌처리
  */
 export function updateCollision(state: GameState) {
-  let deadCells: number[];
-
   return () => {
-    initCells();
-
     const players = Object.values(state.players).sort((a, b) => a.x - b.x);
 
     /** Deadcells 계산 */
@@ -39,19 +35,36 @@ export function updateCollision(state: GameState) {
       }
     }
 
-    /** HP 감소 */
-    for (const player of players) {
+    /** HP 감소될 player 처리 */
+    const playersToBeDamaged: Player[] = [];
+    for (let i = 0; i < players.length; i++) {
+      const player = players[i];
       if (player.type === PlayerType.ALIVE) {
-        const pos = Math.round(player.x / 50);
-        if (deadCells[pos] >= 4) {
-          player.hp--;
-          if (player.hp <= 0) {
-            player.type = PlayerType.ZOMBIE;
-            player.hp = 5; // 다시 MAX_HP로
+        for (let j = Math.max(i - 2, 0); j < i + 2; j++) {
+          const others = players[j];
+          let count = 0;
+          if (Math.abs(others.x - player.x) < 50) {
+            if (others.type === PlayerType.ZOMBIE) {
+              count += 5;
+            } else {
+              count++;
+            }
+
+            if (count >= 5) {
+              playersToBeDamaged.push(player);
+            }
           }
         }
       }
       // TODO 좀비 일 경우 처리
+    }
+
+    for (const player of playersToBeDamaged) {
+      player.hp--;
+      if (player.hp <= 0) {
+        player.type = PlayerType.ZOMBIE;
+        player.hp = 5; // 다시 MAX_HP로
+      }
     }
 
     /** 코인 줍줍 */
@@ -64,10 +77,6 @@ export function updateCollision(state: GameState) {
       }
     }
   };
-
-  function initCells() {
-    deadCells = Array(config.mapWidth / 50).fill(0);
-  }
 }
 
 /**
