@@ -1,3 +1,5 @@
+import { Canvas } from "./canvas";
+
 export interface Drawable {
-    draw: (canvas: CanvasRenderingContext2D) => void;
+    draw: (canvas: Canvas) => void;
 }

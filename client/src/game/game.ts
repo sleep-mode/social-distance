@@ -1,10 +1,11 @@
+import { Canvas } from './canvas';
 import { ctx } from './context';
 import { send } from './emit';
 import { World } from './world';
 
 let score = 0;
 
-interface Player {
+export interface Player {
   socketId: string;
   nickname: string;
   x: number;
@@ -14,7 +15,7 @@ interface Player {
 }
 
 export class Game {
-  constructor(private readonly canvas: CanvasRenderingContext2D) {
+  constructor(private readonly canvas: Canvas) {
     this.world = new World(100);
   }
   private initialized = false;
@@ -23,16 +24,13 @@ export class Game {
   private world: World;
 
   public players: Player[] = [];
-  public myPlayer?: Player;
+  public myPlayer() {
+    let myPlayer = this.players.find(player => player.socketId === ctx.clientId);
+    return myPlayer;
+  }
 
   public async start() {
     await this.world.initialize();
-
-    this.players.forEach(player => {
-      if (player.socketId === ctx.clientId) {
-        this.myPlayer = player;
-      }
-    });
 
     this.initialized = true;
 
@@ -44,9 +42,11 @@ export class Game {
   // update is called once per frame (if possible)
   private update() {
     let thisFrame = Date.now();
-
-    this.updatePlayers((thisFrame - this.prevFrame) / 1000);
-    this.draw();
+    if (this.players.length > 0) {
+      this.updatePlayers((thisFrame - this.prevFrame) / 1000);
+      this.updateViewPort(this.canvas);
+      this.draw();
+    }
     this.prevFrame = thisFrame;
 
     setTimeout(() => {
@@ -62,12 +62,21 @@ export class Game {
     });
   }
 
+  private updateViewPort(canvas: Canvas) {
+    let myPlayer = this.myPlayer();
+    if (myPlayer) {
+      // TODO: use config
+      canvas.viewPort = -Math.max(0, Math.min(myPlayer.x - canvas.width / 2, 1600 - canvas.width));
+    }
+  }
+
   handleKeyboard(event) {
     console.log('gotcha');
     if ((event.keyCode || event.which) === 32) {
-      send('CHANGE_DIRECTION');
-      if (this.myPlayer) {
-        this.myPlayer.direction *= -1;
+      send('CHANE_DIRECTION');
+      let myPlayer = this.myPlayer();
+      if (myPlayer) {
+        myPlayer.direction *= -1;
       }
     }
   }
@@ -77,29 +86,35 @@ export class Game {
       return;
     }
 
+    this.canvas.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
     this.world.draw(this.canvas);
     this.drawPlayers();
 
-    this.canvas.fillStyle = '#FFF';
-    this.canvas.font = '12px Tahoma';
+    const context = this.canvas.context;
+
+    context.fillStyle = '#FFF';
+    context.font = '12px Tahoma';
     const playerCount = Object.keys(this.players).length;
-    this.canvas.fillText('Total players: ' + playerCount, 10, 10);
-    this.canvas.fillText('Score: ' + score, 10, 20);
+    context.fillText('Total players: ' + playerCount, 10, 10);
+    context.fillText('Score: ' + score, 10, 20);
   }
 
   private drawPlayers() {
+    const context = this.canvas.context;
+
     for (const player of this.players) {
-      this.canvas.beginPath();
+      context.beginPath();
       const playerId = player.socketId;
       if (playerId === ctx.clientId) {
-        this.canvas.font = '12px Tahoma';
-        this.canvas.fillStyle = '#fff';
+        context.font = '12px Tahoma';
+        context.fillStyle = '#fff';
       } else {
-        this.canvas.fillStyle = '#f0f';
+        context.fillStyle = '#f0f';
       }
-      this.canvas.arc(player.x, 200, 30, 0, Math.PI * 2, true);
-      this.canvas.fill();
-      this.canvas.fillText(playerId, player.x, player.y + 20);
+      context.arc(player.x, 200, 30, 0, Math.PI * 2, true);
+      context.fill();
+      context.fillText(playerId, player.x, player.y + 20);
     }
   }
 }
