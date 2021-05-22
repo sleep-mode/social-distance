@@ -1,7 +1,8 @@
 import { Connections } from '../Connections';
 import { GameState } from '../GameState';
 import { Server } from 'socket.io';
-import { Player } from '../entity/Player';
+import { PlayerObject } from '../entity/Player';
+import { PlayerType, Character } from '../model/Player';
 
 /* ---------------------------------------------------------- *
  *
@@ -25,13 +26,17 @@ interface ClientEvent {
  */
 export function handleMessage({ state }: Dependencies, { action, params, socketId }: ClientEvent) {
   if (action === 'READY') {
-    const player = new Player({
+    const player = new PlayerObject(
       socketId,
-      coin: 0,
-      nickname: params.name ?? '',
-      x: 0,
-      y: 0,
-    });
+      params.name ?? '',
+      0,
+      0,
+      100,
+      0,
+      PlayerType.ALIVE,
+      pickRandomCharacter(),
+      1
+    );
 
     state.players[socketId] = player;
   }
@@ -40,4 +45,8 @@ export function handleMessage({ state }: Dependencies, { action, params, socketI
     const player = state.players[socketId];
     player.changeDirection();
   }
+}
+
+function pickRandomCharacter() {
+  return Math.floor(Math.random() * 6) as Character;
 }
