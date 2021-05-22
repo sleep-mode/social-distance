@@ -262,12 +262,11 @@ export const Dim = styled.div`
 `;
 
 export const InfoIcon = styled.div`
-  width: 12.5vw;
-  height: 12.5vw;
+  width: 7.5vw;
+  height: 7.5vw;
   border-radius: 10px;
-  margin: 23vh 1.875vw;
+  margin: 1vh 0;
   z-index: 300;
-
   position: relative;
 `;
 
@@ -277,8 +276,8 @@ const iconCss = css`
   bottom: 0;
   left: 0;
   right: 0;
-  width: 100%;
-  height: 100%;
+  width: 80%;
+  height: 80%;
   opacity: 0.8;
   mix-blend-mode: color;
 `;
@@ -292,8 +291,8 @@ export const InjectorInfoIcon = styled(Injector)`
 `;
 
 export const InfoContent = styled.div`
-  height: 4vh;
-  margin: 1.4vh 1.25vw 0 3.1875vw;
+  height: 2vh;
+  margin: 1vh 10vw 0 1.2vw;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -302,7 +301,7 @@ export const InfoContent = styled.div`
 export const Price = styled.p`
   margin: 0;
   font-family: Quicksand;
-  font-size: 1.875vw;
+  font-size: 1vw;
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
@@ -315,7 +314,7 @@ export const Price = styled.p`
 export const Shortcut = styled.p`
   margin: 0;
   font-family: Quicksand;
-  font-size: 3.125vw;
+  font-size: 1vw;
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
