@@ -47,15 +47,16 @@ export function updateCollision(state: GameState) {
             }
           }
         }
+      } else if (player.type === PlayerType.ZOMBIE) {
+        player.hp -= 0.5;
       }
-      // TODO 좀비 일 경우 처리
     }
 
     for (const player of playersToBeDamaged) {
       player.hp--;
       if (player.hp <= 0) {
         player.type = PlayerType.ZOMBIE;
-        player.hp = 5; // 다시 MAX_HP로
+        player.hp = 100; // 다시 MAX_HP로
       }
     }
 
