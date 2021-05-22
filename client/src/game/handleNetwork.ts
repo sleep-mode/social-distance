@@ -14,7 +14,7 @@ export function handleNetwork(socket: Socket, game: Game) {
       const msg: any = JSON.parse(bufferToString(data));
       if (msg.players) {
         game.players = msg.players;
-        game.draw();
+        //game.draw();
       }
     });
     socket.on('close', function () {});

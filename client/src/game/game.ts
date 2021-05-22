@@ -27,6 +27,8 @@ export class Game {
   constructor(private readonly canvas: CanvasRenderingContext2D) {}
   private initialized = false;
   private bg?: HTMLImageElement;
+  private frame: number = 60;
+  private prevFrame: number = Date.now();
 
   public players: Player[] = [];
 
@@ -34,11 +36,37 @@ export class Game {
     this.bg = await loadImage(BackgroundImage);
     this.initialized = true;
     window.addEventListener('keydown', this.handleKeyboard.bind(this));
+    this.prevFrame = Date.now();
+    this.update();
+  }
+
+  // update is called once per frame (if possible)
+  private update() {
+    let thisFrame = Date.now();
+
+    this.updatePlayers((thisFrame - this.prevFrame) / 1000);
+    this.draw();
+    this.prevFrame = thisFrame;
+
+    setTimeout(() => { this.update(); }, 1000 / this.frame);
+  }
+
+  // @params: deltaTime in second
+  private updatePlayers(deltaTime: number) {
+    this.players.forEach(player => {
+      // TODO: create common config
+      player.x += 300 * player.direction * deltaTime;
+    });
   }
 
   handleKeyboard(event) {
     console.log('gotcha');
     if ((event.keyCode || event.which) === 32) {
+      this.players.forEach(player => {
+        if (player.socketId === ctx.clientId) {
+          player.direction *= -1;
+        }
+      })
       send('playerDirection');
     }
   }
@@ -49,26 +77,6 @@ export class Game {
     }
     this.drawBackground();
     this.drawPlayers();
-    //Draw loop
-    // const background = new Image();
-    // background.src = BackgroundImage;
-    //
-    // // Make sure the image is loaded first otherwise nothing will draw.
-    // background.onload = function () {
-    //   this.canvas.drawImage(background, 0, 0, window.innerWidth, window.innerHeight);
-    // }.bind(this);
-    //
-    // this.canvas.fillStyle = '#222';
-    // this.canvas.fillRect(0, 100, window.innerWidth, 200);
-
-    /*
-    for (let i = 0; i < this.coins.length; i++) {
-      this.canvas.beginPath();
-      this.canvas.fillStyle = '#ff0';
-      this.canvas.arc(this.coins[i]?.x, this.coins[i]?.y, 15, 0, Math.PI * 2, true);
-      this.canvas.fill();
-    }
-    */
 
     this.canvas.fillStyle = '#FFF';
     this.canvas.font = '12px Tahoma';
