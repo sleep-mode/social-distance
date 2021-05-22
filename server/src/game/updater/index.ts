@@ -65,6 +65,9 @@ export function updateCollision(state: GameState) {
     /** 코인 줍줍 */
     for (const coin of state.coins) {
       for (const player of players) {
+        if (player.type === PlayerType.ZOMBIE) {
+          continue;
+        }
         if (Math.abs(coin.x - player.x) < 30) {
           state.coins.delete(coin);
           player.coin++;
