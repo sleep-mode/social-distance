@@ -17,7 +17,7 @@ interface Dependencies {
 
 interface ClientEvent {
   action: string;
-  params: Record<string, string>;
+  params: Record<string, any>;
   socketId: string;
 }
 
@@ -35,7 +35,7 @@ export function handleMessage({ state }: Dependencies, { action, params, socketI
       false,
       0,
       PlayerType.ALIVE,
-      pickRandomCharacter(),
+      params.characterIndex ?? pickRandomCharacter(),
       1
     );
 

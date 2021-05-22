@@ -1,3 +1,3 @@
 <p align="center">
-  <img src="https://github.com/sleep-mode/social-distance/raw/master/assets/img_main_logo.png" alt="title" width="600" />
+  <img src="https://github.com/sleep-mode/social-distance/raw/master/assets/img_main_logo.png" alt="title" />
 </p>

@@ -24,7 +24,7 @@ import Nabi from './img/Nabi.png';
 import Cana from './img/Cana.png';
 import Simo from './img/Simo.png';
 
-const CHARACTERS = { TACO: Taco, SEMO: Semo, SEJI: Seji, NABI: Nabi, CANA: Cana, SIMO: Simo };
+const CHARACTERS = { TACO: Taco, SEJI: Seji, SEMO: Semo, CANA: Cana, NABI: Nabi, SIMO: Simo };
 
 const CharacterSelection = ({ index }) => {
   const selectedCharacter = Object.entries(CHARACTERS)[index];
@@ -35,6 +35,7 @@ const CharacterSelection = ({ index }) => {
     </Flex>
   );
 };
+
 const random = (min, max) => Math.floor(Math.random() * (max - min)) + min;
 
 export const Intro = ({ name, setName, setDisplayIntro, topRank }) => {
@@ -42,9 +43,9 @@ export const Intro = ({ name, setName, setDisplayIntro, topRank }) => {
   const [characterIndex, setCharacterIndex] = useState(random(0, CHARACTER_LENGTH));
   const handleStart = useCallback(() => {
     setTimeout(() => {
-      startGame(name, 'server.sleep-mode.io');
+      startGame(name, 'server.sleep-mode.io', characterIndex);
     }, 3000);
-  }, [name]);
+  }, [name, characterIndex]);
 
   return (
     <WideContainer height="60vh">
