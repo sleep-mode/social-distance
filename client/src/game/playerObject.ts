@@ -1,7 +1,7 @@
 import { Canvas } from "./canvas";
 import { ctx } from "./context";
 import { Drawable } from "./drawable";
-import { Player } from "./models/Player";
+import { Player, PlayerType } from "./models/Player";
 import CharacterImage from "./assets/character.png";
 import { loadImage } from "./utility";
 
@@ -63,12 +63,13 @@ export class PlayerObject implements Drawable {
     };
 
     private getSpriteOffset() {
+        const isZombie = this.player.type === PlayerType.ZOMBIE;
         const isMyPlayer = this.socketId === ctx.clientId;
         const direction = this.player.direction;
         const animationFrame = Math.ceil((Date.now() / 100) % 2) - 1;
         return {
             sx: (direction === 1 ? 0 : spriteSize.x * 3) + animationFrame * spriteSize.x,
-            sy: isMyPlayer ? spriteSize.y : spriteSize.y * 3,
+            sy: isZombie ? 0 : isMyPlayer ? spriteSize.y : spriteSize.y * 3,
             sw: spriteSize.x,
             sh: spriteSize.y,
         }
