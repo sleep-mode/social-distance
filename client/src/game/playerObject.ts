@@ -87,12 +87,18 @@ export class PlayerObject implements Drawable {
         const sideLength = hp < 10 ? Math.round(2 * (hp / 10)) : 2;
         const centerLength = hpLength - sideLength * 2;
 
+        if (this.player.mask) {
+          context.filter = 'hue-rotate(-33deg) saturate(105%) brightness(111%)';
+        }
         let hpX = x + basicOffset + hpOffset;
         context.drawImage(hpImages[0], hpX, Math.round(y - 12), sideLength, 4);
         hpX += sideLength;
         context.drawImage(hpImages[1], hpX, Math.round(y - 12), centerLength, 4);
         hpX += centerLength;
         context.drawImage(hpImages[2], hpX, Math.round(y - 12), sideLength, 4);
+        if (this.player.mask) {
+          context.filter = 'none';
+        }
     }
     context.drawImage(
       sprite,
