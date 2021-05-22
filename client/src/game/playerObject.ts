@@ -109,12 +109,13 @@ export class PlayerObject implements Drawable {
 
   private getSpriteOffset() {
     const isZombie = this.player.type === PlayerType.ZOMBIE;
-    const isMyPlayer = this.socketId === ctx.clientId;
+    const character = this.player.character;
+    const hasMask = false;
     const direction = this.player.direction;
     const animationFrame = Math.ceil((Date.now() / 100) % 2) - 1;
     return {
       sx: (direction === 1 ? 0 : spriteSize.x * 3) + animationFrame * spriteSize.x,
-      sy: isZombie ? 0 : isMyPlayer ? spriteSize.y : spriteSize.y * 3,
+      sy: isZombie ? 0 : spriteSize.y * (1 + 2 * character + (hasMask ? 1 : 0)),
       sw: spriteSize.x,
       sh: spriteSize.y,
     };

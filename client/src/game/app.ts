@@ -22,6 +22,16 @@ function prepare(id: string) {
   c.width = screenWidth * ratio;
   c.height = screenHeight * ratio;
 
+  window.addEventListener('resize', function(event) {
+    let screenWidth = (window as any).innerWidth;
+    let screenHeight = (window as any).innerHeight;
+    let ratio: any = 800 / screenHeight;
+    c.width = screenWidth * ratio;
+    c.height = screenHeight * ratio;
+    canvasObj.width = c.width;
+    canvasObj.height = c.height;
+  });
+
   canvasObj = {
     context: canvas,
     viewPort: 0,
