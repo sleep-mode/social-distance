@@ -1,18 +1,11 @@
 import { Canvas } from './canvas';
 import { ctx } from './context';
 import { send } from './emit';
+import { Player } from './player';
+import { PlayerObject } from './playerObject';
 import { World } from './world';
 
 let score = 0;
-
-export interface Player {
-  socketId: string;
-  nickname: string;
-  x: number;
-  y: number; // 거의 고정
-  coin: number;
-  direction: number; // 1 is right, -1 is left;
-}
 
 export class Game {
   constructor(private readonly canvas: Canvas) {
@@ -69,11 +62,11 @@ export class Game {
   }
 
   handleKeyboard(event) {
-    console.log('gotcha');
     if ((event.keyCode || event.which) === 32) {
       send('playerDirection');
       let myPlayer = this.myPlayer();
       if (myPlayer) {
+        // known bug: if you revert direction first and press start again, it will not work
         myPlayer.direction *= -1;
       }
     }
@@ -102,17 +95,7 @@ export class Game {
     const context = this.canvas.context;
 
     for (const player of this.players) {
-      context.beginPath();
-      const playerId = player.socketId;
-      if (playerId === ctx.clientId) {
-        context.font = '12px Tahoma';
-        context.fillStyle = '#fff';
-      } else {
-        context.fillStyle = '#f0f';
-      }
-      context.arc(player.x, 200, 30, 0, Math.PI * 2, true);
-      context.fill();
-      context.fillText(playerId, player.x, player.y + 20);
+      new PlayerObject(player).draw(this.canvas);
     }
   }
 }
