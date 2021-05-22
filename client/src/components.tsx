@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { keyframes } from '@emotion/react';
 import { ReactComponent as Logo } from './img/img_main_logo.svg';
+import { ReactComponent as Start } from './img/start.svg';
 import {
   alignItems,
   AlignItemsProps,
@@ -18,6 +19,8 @@ import {
   ColorProps,
   space,
   SpaceProps,
+  position,
+  PositionProps,
 } from 'styled-system';
 
 const disappearLate = keyframes`
@@ -30,6 +33,12 @@ const appearLate = keyframes`
  0% { opacity: 0 }
  70% { opacity: 0 }
  100% { opacity: 1 }
+`;
+
+const startDisplayAnimation = keyframes`
+ 0% { opacity: 1 }
+ 30% { opacity: 1 }
+ 100% { opacity: 0 }
 `;
 
 const logoDisplayAnimation = keyframes`
@@ -67,7 +76,7 @@ export const IntroModal = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   animation-name: ${appearLate};
-  animation-duration: 6s;
+  animation-duration: 5s;
 `;
 
 export const TeamText = styled.text`
@@ -87,7 +96,7 @@ export const TeamText = styled.text`
   transform: translate(-50%, -50%);
   color: #e5f3cd;
   animation-name: ${disappearLate};
-  animation-duration: 6s;
+  animation-duration: 5s;
 `;
 
 export const LogoImage = styled(Logo)`
@@ -99,7 +108,20 @@ export const LogoImage = styled(Logo)`
   width: 400px;
   height: 70px;
   animation-name: ${logoDisplayAnimation};
-  animation-duration: 6s;
+  animation-duration: 5s;
+`;
+
+export const StartImage = styled(Start)`
+  position: absolute;
+  z-index: 100;
+  top: 45%;
+  left: 50%;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  height: 70px;
+  animation-name: ${startDisplayAnimation};
+  animation-duration: 3s;
 `;
 
 type FlexProps = AlignItemsProps & FlexDirectionProps & JustifyContentProps & HeightProps & WidthProps & SpaceProps;
@@ -176,4 +198,15 @@ export const Text = styled.text<TypographyProps & ColorProps & SpaceProps>`
   ${typography}
   ${space}
   font-family: Quicksand;
+`;
+
+export const InfoModal = styled.div<PositionProps>`
+  width: 400px;
+  height: 600px;
+  padding: 70px;
+  background-color: #143c41;
+  position: absolute;
+  top: 0%;
+  transform: translate(-50%, -50%);
+  ${position}
 `;

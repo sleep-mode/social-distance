@@ -1,14 +1,15 @@
-import { HallOfFame } from './hallOfFame';
+import { useState } from 'react';
 import { Intro } from './intro';
+import { Main } from './main';
 import { Container, Canvas } from './components';
 import BackgroundImage from './img/bg_3.png';
 
 function App() {
+  const [displayIntro, setDisplayIntro] = useState(true);
   return (
     <Container style={{ backgroundImage: `url("${BackgroundImage}")` }}>
-      {/* <Canvas id="cvs" /> */}
-      <Intro />
-      <HallOfFame />
+      {displayIntro ? <Intro setDisplayIntro={setDisplayIntro} /> : <Main />}
+      <Canvas id="cvs" />
     </Container>
   );
 }
