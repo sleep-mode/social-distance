@@ -1,5 +1,5 @@
 import { PlayerObject } from './entity/Player';
-import { Coin } from './entity/Coin';
+import { Coin } from './model/Coin';
 
 export class GameState {
   players: Record<string, PlayerObject>;
