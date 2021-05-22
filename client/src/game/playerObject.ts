@@ -41,14 +41,18 @@ export class PlayerObject implements Drawable {
 
     const context = canvas.context;
     const offset = this.getSpriteOffset();
+    const x = Math.round(this.player.x + canvas.viewPort - spriteSize.x / 2);
+    const y = canvas.height - spriteSize.y - 20;
+    context.fillStyle = '#94e806';
+    context.fillRect(x + 10, y - 12, 40, 4);
     context.drawImage(
       sprite,
       offset.sx,
       offset.sy,
       offset.sw,
       offset.sh,
-      this.player.x + canvas.viewPort - spriteSize.x / 2,
-      canvas.height - spriteSize.y - 20,
+      x,
+      y,
       spriteSize.x,
       spriteSize.y
     );
