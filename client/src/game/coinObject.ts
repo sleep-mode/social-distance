@@ -1,7 +1,7 @@
 import { Canvas } from "./canvas";
 import { Drawable } from "./drawable";
 import { Coin } from "./models/Coin";
-import CoinImage from "./assets/coin.svg";
+import CoinImage from "./assets/coin.png";
 import { loadImage } from "./utility";
 
 const spriteSize = {

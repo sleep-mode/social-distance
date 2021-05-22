@@ -2,7 +2,7 @@ import { Canvas } from "./canvas";
 import { ctx } from "./context";
 import { Drawable } from "./drawable";
 import { Player } from "./models/Player";
-import CharacterImage from "./assets/character.svg";
+import CharacterImage from "./assets/character.png";
 import { loadImage } from "./utility";
 
 const spriteSize = {
