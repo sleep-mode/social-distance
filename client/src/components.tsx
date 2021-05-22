@@ -1,7 +1,9 @@
 import styled from '@emotion/styled';
-import { keyframes } from '@emotion/react';
+import { keyframes, css } from '@emotion/react';
 import { ReactComponent as Logo } from './img/img_main_logo.svg';
 import { ReactComponent as Start } from './img/start.svg';
+import { ReactComponent as Mask } from './img/btn-mask.svg';
+import { ReactComponent as Injector } from './img/btn-injector.svg';
 import {
   alignItems,
   AlignItemsProps,
@@ -254,4 +256,68 @@ export const Dim = styled.div`
   height: 100vh;
   opacity: 0.8;
   background-color: #143c41;
+`;
+
+export const InfoIcon = styled.div`
+  width: 12.5vw;
+  height: 12.5vw;
+  border-radius: 10px;
+  margin: 23vh 1.875vw;
+  z-index: 300;
+
+  position: relative;
+`;
+
+const iconCss = css`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+  mix-blend-mode: color;
+`
+
+export const MaskInfoIcon = styled(Mask)`
+  ${iconCss}
+`;
+
+export const InjectorInfoIcon = styled(Injector)`
+  ${iconCss}
+`;
+
+export const InfoContent = styled.div`
+  height: 4vh;
+  margin: 1.4vh 1.25vw 0 3.1875vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const Price = styled.p`
+  margin: 0;
+  font-family: Quicksand;
+  font-size: 1.875vw;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #ffffff;
+`;
+
+export const Shortcut = styled.p`
+  margin: 0;
+  font-family: Quicksand;
+  font-size: 3.125vw;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #ffffff;
 `;
