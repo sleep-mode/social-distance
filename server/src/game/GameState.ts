@@ -1,23 +1,19 @@
 import { Player } from './Player';
-
-class Coin {
-  x: number;
-  y: number;
-}
+import { Coin } from './Coin';
 
 export class GameState {
-  players: Map<string, Player>;
-  coins: Map<string, Coin>;
+  players: Record<string, Player>;
+  coins: Record<string, Coin>;
 
   constructor() {
-    this.players = new Map();
-    this.coins = new Map();
+    this.players = {};
+    this.coins = {};
   }
 
   serialize() {
     return {
-      players: this.players.values(),
-      coins: this.coins.values(),
+      players: Object.values(this.players),
+      coins: Object.values(this.coins),
     };
   }
 }

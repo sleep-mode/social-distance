@@ -29,11 +29,13 @@ export class GameServer {
       connections.add(socket);
 
       socket.on('message', (action, params = {}) => {
+        console.log({ action, params });
         handleMessage({ connections, state, io }, { socketId: socket.id, action, params });
       });
 
       socket.on('disconnect', () => {
-        state.players.delete(socket.id);
+        console.log(`[disconnect]: ${socket.id}`);
+        delete state.players[socket.id];
         connections.remove(socket);
       });
     });
@@ -62,20 +64,20 @@ interface ClientEvent {
  */
 function handleMessage({ state }: Dependencies, { action, params, socketId }: ClientEvent) {
   if (action === 'READY') {
-    state.players.set(
+    const player = new Player({
       socketId,
-      new Player({
-        socketId,
-        coin: 0,
-        nickname: params.nickName ?? '',
-        x: 0,
-        y: 0,
-      })
-    );
+      coin: 0,
+      nickname: params.nickName ?? '',
+      x: 0,
+      y: 0,
+    });
+
+    state.players[socketId] = player;
   }
 
   if (action === 'CHANGE_DIRECTION') {
-    //
+    const player = state.players[socketId];
+    player.changeDirection();
   }
 }
 
@@ -84,7 +86,7 @@ function handleMessage({ state }: Dependencies, { action, params, socketId }: Cl
  */
 function updatePlayerLocation(state: GameState) {
   return (delta: number) => {
-    state.players.forEach(player => {
+    Object.values(state.players).forEach(player => {
       player.update(delta);
     });
   };
@@ -95,6 +97,6 @@ function updatePlayerLocation(state: GameState) {
  */
 function broadcastState(state: GameState, io: Server) {
   return () => {
-    io.to(config.roomName).emit('SYNC', state.serialize());
+    io.to(config.roomName).emit('message', ['SYNC', state.serialize()]);
   };
 }

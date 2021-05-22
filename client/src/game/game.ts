@@ -49,7 +49,9 @@ export class Game {
     this.draw();
     this.prevFrame = thisFrame;
 
-    setTimeout(() => { this.update(); }, 1000 / this.frame);
+    setTimeout(() => {
+      this.update();
+    }, 1000 / this.frame);
   }
 
   // @params: deltaTime in second
@@ -63,7 +65,7 @@ export class Game {
   handleKeyboard(event) {
     console.log('gotcha');
     if ((event.keyCode || event.which) === 32) {
-      send('playerDirection');
+      send('CHANGE_DIRECTION');
       if (this.myPlayer) {
         this.myPlayer.direction *= -1;
       }
