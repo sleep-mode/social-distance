@@ -1,7 +1,6 @@
 import BackgroundImage from './assets/bg_1.png';
 import { Canvas } from './canvas';
 import { Drawable } from './drawable';
-import { Player } from './game';
 
 export class World implements Drawable {
     private bg?: HTMLImageElement;
