@@ -3,7 +3,7 @@ import { Connections } from './Connections';
 import { GameState } from './GameState';
 import { loop } from './loop';
 import { config } from '../config';
-import { Player } from './Player';
+import { handleMessage } from './handler';
 
 export class GameServer {
   constructor(
@@ -40,63 +40,4 @@ export class GameServer {
       });
     });
   }
-}
-
-/* ---------------------------------------------------------- *
- *
- *  TODO: move to other file
- *
- * ---------------------------------------------------------- */
-interface Dependencies {
-  connections: Connections;
-  state: GameState;
-  io: Server;
-}
-
-interface ClientEvent {
-  action: string;
-  params: Record<string, string>;
-  socketId: string;
-}
-
-/**
- * 클라이언트로부터 오는 메시지 처리
- */
-function handleMessage({ state }: Dependencies, { action, params, socketId }: ClientEvent) {
-  if (action === 'READY') {
-    const player = new Player({
-      socketId,
-      coin: 0,
-      nickname: params.name ?? '',
-      x: 0,
-      y: 0,
-    });
-
-    state.players[socketId] = player;
-  }
-
-  if (action === 'CHANGE_DIRECTION') {
-    const player = state.players[socketId];
-    player.changeDirection();
-  }
-}
-
-/**
- * 플레이어 위치 업데이트
- */
-function updatePlayerLocation(state: GameState) {
-  return (delta: number) => {
-    Object.values(state.players).forEach(player => {
-      player.update(delta);
-    });
-  };
-}
-
-/**
- * 모든 클라이언트 상태 싱크 전송
- */
-function broadcastState(state: GameState, io: Server) {
-  return () => {
-    io.to(config.roomName).emit('message', 'SYNC', state.serialize());
-  };
 }

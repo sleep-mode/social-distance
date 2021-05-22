@@ -1,19 +1,23 @@
-import { Player } from './Player';
-import { Coin } from './Coin';
+import { Player } from './entity/Player';
+import { Coin } from './entity/Coin';
 
 export class GameState {
   players: Record<string, Player>;
-  coins: Record<string, Coin>;
+  coins: Coin[];
+  startedAt: number;
+  lastCoinGeneratedAt: number;
 
   constructor() {
     this.players = {};
-    this.coins = {};
+    this.coins = [];
+    this.startedAt = Date.now();
+    this.lastCoinGeneratedAt = Date.now();
   }
 
   serialize() {
     return {
       players: Object.values(this.players),
-      coins: Object.values(this.coins),
+      coins: this.coins,
     };
   }
 }
