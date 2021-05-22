@@ -13,7 +13,7 @@ export function handleNetwork(socket: Socket, game: Game) {
 
     socket.on('message', function (event: string, params: Record<string, any>) {
       if (event === 'SYNC') {
-        game.players = params.players;
+        game.syncPlayers(params.players);
       }
     });
 
