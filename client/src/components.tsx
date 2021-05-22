@@ -73,7 +73,7 @@ export const WideContainer = styled.div<HeightProps>`
 `;
 
 export const IntroModal = styled.div`
-  width: 720px;
+  width: 1000px;
   height: 740px;
   padding: 70px;
   background-color: #143c41;
@@ -174,14 +174,14 @@ export const FormContainer = styled.div<WidthProps>`
 `;
 
 export const StartButton = styled.div`
-  width: 100%;
+  width: 50%;
   height: 70px;
   cursor: pointer;
   text-align: center;
-  line-height: 70px;
+  align-self: center;
   border: 1px solid rgba(27, 28, 37, 0.1);
   border-radius: 10px;
-  margin: 0 0 60px;
+  margin: 150px 0 0px;
   font-family: Quicksand;
   font-size: 20px;
   font-weight: bold;
@@ -194,7 +194,7 @@ export const StyledInput = styled.input`
   width: 92%;
   height: 70px;
   padding: 0px 20px;
-  margin: 10px 0 30px;
+  margin: 20px 0 50px;
   border-radius: 10px;
   border: solid 1px #a2ff00;
   caret-color: #a2ff00;
@@ -278,7 +278,7 @@ const iconCss = css`
   height: 100%;
   opacity: 0.8;
   mix-blend-mode: color;
-`
+`;
 
 export const MaskInfoIcon = styled(Mask)`
   ${iconCss}
@@ -320,4 +320,29 @@ export const Shortcut = styled.p`
   letter-spacing: normal;
   text-align: center;
   color: #ffffff;
+`;
+export const CharacterBox = styled.div`
+  width: 180px;
+  height: 180px;
+  margin: 20px 0;
+  padding: 20px;
+  border-radius: 10px;
+  border: solid 1px #a2ff00;
+  background-color: rgba(223, 223, 223, 0.1);
+`;
+
+export const LeftArrow = styled.div`
+  width: 40px;
+  height: 30px;
+  margin: 203px 135px 277px 0;
+  transform: rotate(-90deg);
+  background-color: #94e806;
+`;
+
+export const RightArrow = styled.div`
+  width: 40px;
+  height: 30px;
+  margin: 203px 75px 277px 230px;
+  transform: rotate(-90deg);
+  background-color: #94e806;
 `;
