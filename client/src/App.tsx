@@ -10,7 +10,8 @@ function App() {
   return (
     <Container style={{ backgroundImage: `url("${BackgroundImage}")` }}>
       {displayIntro ? <Intro name={name} setName={setName} setDisplayIntro={setDisplayIntro} /> : <Main name={name} />}
-      <Canvas id="cvs" />
+      <Canvas style={{zIndex: 1}} id="cvs" />
+      <Canvas style={{zIndex: 2}} id="ocvs" />
     </Container>
   );
 }
