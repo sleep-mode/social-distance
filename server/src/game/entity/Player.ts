@@ -5,6 +5,7 @@ interface PlayerProps {
   nickname: string;
   x: number;
   y: number; // 거의 고정
+  hp?: number;
   coin: number;
   type?: PlayerType;
   direction?: number; // 1 is right, 0 is left;
@@ -26,12 +27,12 @@ export class Player {
   type: PlayerType;
   direction: number; // 1 is right, -1 is left;
 
-  constructor({ coin, direction = 1, nickname, socketId, x, y, type = PlayerType.ALIVE }: PlayerProps) {
+  constructor({ coin, direction = 1, nickname, socketId, x, y, type = PlayerType.ALIVE, hp = 100 }: PlayerProps) {
     this.coin = coin;
     this.direction = direction;
     this.nickname = nickname;
     this.socketId = socketId;
-    this.hp = 5;
+    this.hp = hp;
     this.x = x;
     this.y = y;
     this.type = type;

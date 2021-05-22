@@ -29,7 +29,6 @@ export class GameServer {
       connections.add(socket);
 
       socket.on('message', (action, params = {}) => {
-        console.log({ action, params });
         handleMessage({ connections, state, io }, { socketId: socket.id, action, params });
       });
 
