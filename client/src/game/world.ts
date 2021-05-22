@@ -1,6 +1,7 @@
 import BackgroundImage from './assets/bg_1.png';
 import { Canvas } from './canvas';
 import { Drawable } from './drawable';
+import { loadImage } from './utility';
 
 export class World implements Drawable {
     private bg?: HTMLImageElement;
@@ -13,18 +14,8 @@ export class World implements Drawable {
     }
 
     async initialize() {
-        this.bg = await this.loadImage(BackgroundImage);
+        this.bg = await loadImage(BackgroundImage);
         this.initialized = true;
-    }
-    
-    async loadImage(asset: any): Promise<HTMLImageElement> {
-        const image = new Image();
-        image.src = asset;
-        return new Promise(resolve => {
-            image.addEventListener('load', () => {
-                resolve(image);
-            });
-        });
     }
 
     draw = (canvas: Canvas) => {
