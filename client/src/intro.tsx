@@ -8,9 +8,12 @@ import {
   StyledInput,
   StartButton,
   TeamText,
+  JunctionText,
+  Flex,
 } from './components';
 import { Record } from './record';
 import { startGame } from './game/app';
+import { ctx } from './game/context';
 
 export const Intro = ({ name, setName, setDisplayIntro, topRank }) => {
   const handleStart = useCallback(() => {
@@ -21,6 +24,7 @@ export const Intro = ({ name, setName, setDisplayIntro, topRank }) => {
 
   return (
     <WideContainer height="60vh">
+      <JunctionText>JunctionX Seoul x aws</JunctionText>
       <LogoImage />
       <TeamText>Team_SleepMode</TeamText>
       <IntroModal>
@@ -33,6 +37,7 @@ export const Intro = ({ name, setName, setDisplayIntro, topRank }) => {
             onChange={e => setName(e.target.value)}
             onKeyPress={e => {
               if (e.key === 'Enter') {
+                !name && setName('후치');
                 handleStart();
                 setDisplayIntro(false);
               }
@@ -40,6 +45,7 @@ export const Intro = ({ name, setName, setDisplayIntro, topRank }) => {
           />
           <StartButton
             onClick={() => {
+              !name && setName('후치');
               handleStart();
               setDisplayIntro(false);
             }}
@@ -47,9 +53,11 @@ export const Intro = ({ name, setName, setDisplayIntro, topRank }) => {
             START
           </StartButton>
           <BoldText>{'Leaderboard'}</BoldText>
-          {topRank?.map((record: { name: string; score: string }, idx: number) => {
-            return <Record key={idx} rank={idx + 1} id={record.name} time={record.score} />;
-          })}
+          <Flex flexDirection="column" mt="15px">
+            {topRank?.map((record: { name: string; score: string }, idx: number) => {
+              return <Record key={idx} rank={idx + 1} id={record.name} time={record.score} />;
+            })}
+          </Flex>
         </FormContainer>
       </IntroModal>
     </WideContainer>
