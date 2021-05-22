@@ -1,7 +1,7 @@
 import { GameState } from '../GameState';
 import { Server } from 'socket.io';
 import { config } from '../../config';
-import { Coin } from '../entity/Coin';
+import { Coin, createCoin } from '../entity/Coin';
 import { Player, PlayerType } from '../entity/Player';
 
 const MAX_COIN_COUNT = 30;
@@ -21,7 +21,22 @@ export function updatePlayerLocation(state: GameState) {
  * 충돌처리
  */
 export function updateCollision(state: GameState) {
-  return () => {};
+  return () => {
+    /*
+    const alives: Player[] = [];
+    const zombies: Player[] = [];
+
+    const damanged: Player[] = [];
+
+    for (const player of Object.values(state.players)) {
+      if (player.type === PlayerType.ALIVE) {
+        alives.push(player);
+      } else if (player.type === PlayerType.ZOMBIE) {
+        zombies.push(player);
+      }
+    }
+    */
+  };
 }
 
 /**
@@ -69,10 +84,7 @@ function generateCoins(state: GameState): Coin[] {
   const coins: Coin[] = [];
 
   for (let i = 0; i < COIN_GENERATION_COUNT; i++) {
-    coins.push({
-      amount: 1,
-      x: config.mapWidth * Math.random(),
-    });
+    coins.push(createCoin(config.mapWidth * Math.random(), 1));
   }
 
   return coins;
