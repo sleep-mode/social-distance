@@ -13,7 +13,6 @@ import {
 } from './components';
 import { Record } from './record';
 import { startGame } from './game/app';
-import { ctx } from './game/context';
 
 export const Intro = ({ name, setName, setDisplayIntro, topRank }) => {
   const handleStart = useCallback(() => {

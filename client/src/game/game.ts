@@ -8,8 +8,6 @@ import { CoinObject, disappearTime } from './coinObject';
 import { Coin } from './models/Coin';
 import { triggerSound } from './utils/audio';
 
-let score = 0;
-
 export class Game {
   private initialized = false;
   private frame: number = 60;

@@ -9,20 +9,6 @@ import { playBGM } from './utils/audio';
 let screenWidth = (window as any).innerWidth;
 let screenHeight = (window as any).innerHeight;
 
-const PIXEL_RATIO = (function () {
-  const ctx = (document as any).createElement('canvas').getContext('2d')!;
-  const dpr = (window as any).devicePixelRatio || 1;
-  const bsr =
-    ctx.webkitBackingStorePixelRatio ||
-    ctx.mozBackingStorePixelRatio ||
-    ctx.msBackingStorePixelRatio ||
-    ctx.oBackingStorePixelRatio ||
-    ctx.backingStorePixelRatio ||
-    1;
-
-  return dpr / bsr;
-})();
-
 function prepare(id: string) {
   const c: HTMLCanvasElement = (document as any).getElementById(id);
   if (c == null) {
