@@ -1,6 +1,7 @@
 import { ctx } from './context';
 import { send } from './emit';
 import BackgroundImage from './assets/bg_1.png';
+import { World } from './world';
 
 async function loadImage(asset: any): Promise<HTMLImageElement> {
   const image = new Image();
@@ -24,16 +25,19 @@ interface Player {
 }
 
 export class Game {
-  constructor(private readonly canvas: CanvasRenderingContext2D) {}
+  constructor(private readonly canvas: CanvasRenderingContext2D) {
+    this.world = new World(canvas, 100);
+  }
   private initialized = false;
   private bg?: HTMLImageElement;
   private frame: number = 60;
   private prevFrame: number = Date.now();
+  private world: World;
 
   public players: Player[] = [];
 
   public async start() {
-    this.bg = await loadImage(BackgroundImage);
+    await this.world.initialize();
     this.initialized = true;
     window.addEventListener('keydown', this.handleKeyboard.bind(this));
     this.prevFrame = Date.now();
@@ -75,7 +79,7 @@ export class Game {
     if (!this.initialized) {
       return;
     }
-    this.drawBackground();
+    this.world.render(0);
     this.drawPlayers();
 
     this.canvas.fillStyle = '#FFF';
@@ -83,12 +87,6 @@ export class Game {
     const playerCount = Object.keys(this.players).length;
     this.canvas.fillText('Total players: ' + playerCount, 10, 10);
     this.canvas.fillText('Score: ' + score, 10, 20);
-  }
-
-  private drawBackground() {
-    if (this.bg != null) {
-      this.canvas.drawImage(this.bg, 0, 0, window.innerWidth, window.innerHeight);
-    }
   }
 
   private drawPlayers() {
