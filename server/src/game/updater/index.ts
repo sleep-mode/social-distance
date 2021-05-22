@@ -71,7 +71,7 @@ export function updateCoinCollision(state: GameState) {
         }
         if (Math.abs(coin.x - player.x) < 30) {
           state.coins.delete(coin);
-          player.coin++;
+          player.coin += coin.amount;
         }
       }
     }
@@ -137,11 +137,11 @@ function generateCoins(state: GameState): Coin[] {
     return [];
   }
 
-  const COIN_GENERATION_COUNT = 3;
+  const COIN_GENERATION_COUNT = 5;
   const coins: Coin[] = [];
 
   for (let i = 0; i < COIN_GENERATION_COUNT; i++) {
-    coins.push(createCoin(config.mapWidth * Math.random(), 1));
+    coins.push(createCoin(config.mapWidth * Math.random(), Math.random() > 0.8 ? 5 : 1));
   }
 
   return coins;
