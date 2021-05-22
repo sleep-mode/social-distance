@@ -34,7 +34,7 @@ function prepare() {
 
   const ratio: any = PIXEL_RATIO;
   c.width = screenWidth * ratio;
-  c.height = (screenHeight * ratio) * (3 / 4);
+  c.height = (screenHeight * ratio);
 
   // c.style.width = screenWidth + 'px';
   // c.style.height = screenHeight + 'px';
