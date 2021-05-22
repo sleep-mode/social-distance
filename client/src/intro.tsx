@@ -20,9 +20,7 @@ const leaderBoard = [
   { id: 'Joseph', time: '8:8:8' },
 ];
 
-export const Intro = ({ setDisplayIntro }) => {
-  const [name, setName] = useState('');
-
+export const Intro = ({ name, setName, setDisplayIntro }) => {
   const handleStart = useCallback(() => {
     setTimeout(() => {
       startGame(name, 'localhost', '5000');

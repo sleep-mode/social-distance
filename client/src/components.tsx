@@ -127,7 +127,6 @@ export const StartImage = styled(Start)`
 type FlexProps = AlignItemsProps & FlexDirectionProps & JustifyContentProps & HeightProps & WidthProps & SpaceProps;
 export const Flex = styled.div<FlexProps>`
   display: flex;
-  margin: 5px 10px;
   ${alignItems}
   ${justifyContent}
   ${flexDirection}
@@ -185,12 +184,14 @@ export const BoldText = styled.text`
   font-family: Quicksand;
   font-size: 30px;
   font-weight: bold;
+  margin-bottom: 5px;
   font-stretch: normal;
   font-style: normal;
   line-height: normal;
   letter-spacing: normal;
   color: #dfdfdf;
-  margin-bottom: 20px;
+  ${typography}
+  ${space}
 `;
 
 export const Text = styled.text<TypographyProps & ColorProps & SpaceProps>`
@@ -200,13 +201,21 @@ export const Text = styled.text<TypographyProps & ColorProps & SpaceProps>`
   font-family: Quicksand;
 `;
 
-export const InfoModal = styled.div<PositionProps>`
-  width: 400px;
-  height: 600px;
-  padding: 70px;
+export const InfoModal = styled.div<PositionProps & SpaceProps>`
+  width: 270px;
+  height: 400px;
   background-color: #143c41;
   position: absolute;
+  overflow: hidden;
   top: 0%;
-  transform: translate(-50%, -50%);
+  ${space}
   ${position}
+`;
+
+export const BestRecordModal = styled.div`
+  position: absolute;
+  z-index: 500;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
 `;

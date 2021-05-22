@@ -6,9 +6,10 @@ import BackgroundImage from './img/bg_3.png';
 
 function App() {
   const [displayIntro, setDisplayIntro] = useState(true);
+  const [name, setName] = useState('');
   return (
     <Container style={{ backgroundImage: `url("${BackgroundImage}")` }}>
-      {displayIntro ? <Intro setDisplayIntro={setDisplayIntro} /> : <Main />}
+      {displayIntro ? <Intro name={name} setName={setName} setDisplayIntro={setDisplayIntro} /> : <Main name={name} />}
       <Canvas id="cvs" />
     </Container>
   );
