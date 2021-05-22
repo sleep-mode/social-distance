@@ -55,7 +55,7 @@ export class PlayerObject implements Drawable {
             offset.sw,
             offset.sh,
             this.player.x + canvas.viewPort - spriteSize.x / 2,
-            canvas.height - spriteSize.y,
+            canvas.height - spriteSize.y - 20,
             spriteSize.x,
             spriteSize.y
         );
