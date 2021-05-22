@@ -2,7 +2,7 @@ import { GameState } from '../GameState';
 import { Server } from 'socket.io';
 import { config } from '../../config';
 import { Coin, createCoin } from '../entity/Coin';
-import { Player, PlayerType } from '../entity/Player';
+import { PlayerType } from '../entity/Player';
 
 const MAX_COIN_COUNT = 30;
 
@@ -21,22 +21,53 @@ export function updatePlayerLocation(state: GameState) {
  * 충돌처리
  */
 export function updateCollision(state: GameState) {
+  let deadCells: number[];
+
   return () => {
-    /*
-    const alives: Player[] = [];
-    const zombies: Player[] = [];
+    initCells();
 
-    const damanged: Player[] = [];
+    const players = Object.values(state.players).sort((a, b) => a.x - b.x);
 
-    for (const player of Object.values(state.players)) {
+    /** Deadcells 계산 */
+    for (const player of players) {
+      const pos = Math.round(player.x / 50);
+      /** cell에 value가 4 이상이면 감염 */
       if (player.type === PlayerType.ALIVE) {
-        alives.push(player);
+        deadCells[pos]++;
       } else if (player.type === PlayerType.ZOMBIE) {
-        zombies.push(player);
+        deadCells[pos] = deadCells[pos] + 4;
       }
     }
-    */
+
+    /** HP 감소 */
+    for (const player of players) {
+      if (player.type === PlayerType.ALIVE) {
+        const pos = Math.round(player.x / 50);
+        if (deadCells[pos] >= 4) {
+          player.hp--;
+          if (player.hp <= 0) {
+            player.type = PlayerType.ZOMBIE;
+            player.hp = 5; // 다시 MAX_HP로
+          }
+        }
+      }
+      // TODO 좀비 일 경우 처리
+    }
+
+    /** 코인 줍줍 */
+    for (const coin of state.coins) {
+      for (const player of players) {
+        if (Math.abs(coin.x - player.x) < 30) {
+          state.coins.delete(coin);
+          player.coin++;
+        }
+      }
+    }
   };
+
+  function initCells() {
+    deadCells = Array(config.mapWidth / 50).fill(0);
+  }
 }
 
 /**
@@ -45,7 +76,7 @@ export function updateCollision(state: GameState) {
 export function updateCoinGeneration(state: GameState) {
   return () => {
     if (shouldGenerateCoin(state)) {
-      state.coins.push(...generateCoins(state));
+      generateCoins(state).forEach(coin => state.coins.add(coin));
     }
   };
 }
@@ -76,7 +107,7 @@ function shouldGenerateCoin(state: GameState) {
  * 새 코인 생성
  */
 function generateCoins(state: GameState): Coin[] {
-  if (state.coins.length > MAX_COIN_COUNT) {
+  if (state.coins.size > MAX_COIN_COUNT) {
     return [];
   }
 
