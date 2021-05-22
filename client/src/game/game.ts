@@ -73,7 +73,7 @@ export class Game {
   handleKeyboard(event) {
     console.log('gotcha');
     if ((event.keyCode || event.which) === 32) {
-      send('CHANE_DIRECTION');
+      send('CHANGE_DIRECTION');
       let myPlayer = this.myPlayer();
       if (myPlayer) {
         myPlayer.direction *= -1;

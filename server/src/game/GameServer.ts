@@ -67,7 +67,7 @@ function handleMessage({ state }: Dependencies, { action, params, socketId }: Cl
     const player = new Player({
       socketId,
       coin: 0,
-      nickname: params.nickName ?? '',
+      nickname: params.name ?? '',
       x: 0,
       y: 0,
     });
@@ -97,6 +97,6 @@ function updatePlayerLocation(state: GameState) {
  */
 function broadcastState(state: GameState, io: Server) {
   return () => {
-    io.to(config.roomName).emit('message', ['SYNC', state.serialize()]);
+    io.to(config.roomName).emit('message', 'SYNC', state.serialize());
   };
 }

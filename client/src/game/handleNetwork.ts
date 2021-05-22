@@ -11,7 +11,7 @@ export function handleNetwork(socket: Socket, game: Game) {
     /** Send를 보내야 서버에서 캐릭터를 생성 */
     socket.send('READY', { name: 'foo' });
 
-    socket.on('message', function ([event, params]: [string, Record<string, any>]) {
+    socket.on('message', function (event: string, params: Record<string, any>) {
       if (event === 'SYNC') {
         game.players = params.players;
       }
