@@ -4,6 +4,7 @@ import { Game } from './game';
 import { ctx } from './context';
 import { handleNetwork } from './handleNetwork';
 import { Canvas } from './canvas';
+import { playBGM } from './utils/audio';
 
 let screenWidth = (window as any).innerWidth;
 let screenHeight = (window as any).innerHeight;
@@ -56,6 +57,7 @@ export function startGame(name: string, host: string, port: string) {
 
   const game = new Game(canvas);
   console.log('start game');
+  playBGM();
 
   ctx.playerName = name;
 

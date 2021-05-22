@@ -6,6 +6,7 @@ import { World } from './world';
 import { Player } from './models/Player';
 import { CoinObject } from './coinObject';
 import { Coin } from './models/Coin';
+import { triggerSound } from './utils/audio';
 
 let score = 0;
 
@@ -101,6 +102,7 @@ export class Game {
 
   handleKeyboard(event) {
     if ((event.keyCode || event.which) === 32) {
+      triggerSound('coin');
       /*
       const myPlayer = this.players[ctx.clientId];
       if (myPlayer) {
