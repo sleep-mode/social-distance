@@ -1,4 +1,4 @@
-export class Coin {
+export interface Coin {
   x: number;
-  y: number;
+  amount: number;
 }

@@ -1,4 +1,5 @@
 import { config } from '../config';
+
 interface PlayerProps {
   socketId: string;
   nickname: string;
@@ -12,7 +13,7 @@ interface PlayerProps {
 export enum PlayerType {
   ALIVE,
   DEAD,
-  CORONA,
+  ZOMBIE,
 }
 
 export class Player {

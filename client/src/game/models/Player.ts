@@ -11,5 +11,5 @@ export interface Player {
 export enum PlayerType {
   ALIVE,
   DEAD,
-  CORONA,
+  ZOMBIE,
 }
