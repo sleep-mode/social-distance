@@ -23,8 +23,8 @@ const PIXEL_RATIO = (function () {
   return dpr / bsr;
 })();
 
-function prepare() {
-  const c: HTMLCanvasElement = (document as any).getElementById('cvs');
+function prepare(id: string) {
+  const c: HTMLCanvasElement = (document as any).getElementById(id);
   if (c == null) {
     alert('No canvas found. retry');
     return;
@@ -32,7 +32,7 @@ function prepare() {
   let canvasObj: Canvas;
   const canvas = c.getContext('2d')!;
 
-  const ratio: any = PIXEL_RATIO;
+  const ratio: any = 1; //PIXEL_RATIO;
   c.width = screenWidth * ratio;
   c.height = (screenHeight * ratio);
 
@@ -50,12 +50,13 @@ function prepare() {
 }
 
 export function startGame(name: string, host: string, port: string) {
-  const canvas = prepare();
-  if (canvas == null) {
+  const canvas = prepare('cvs');
+  const objectCanvas = prepare('ocvs');
+  if (canvas == null || objectCanvas == null) {
     return;
   }
 
-  const game = new Game(canvas);
+  const game = new Game(canvas, objectCanvas);
   console.log('start game');
   playBGM();
 

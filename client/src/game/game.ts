@@ -19,7 +19,7 @@ export class Game {
   private disappearingCoins: Record<number, CoinObject>;
   private players: Record<string, PlayerObject>;
 
-  constructor(private readonly canvas: Canvas) {
+  constructor(private readonly canvas: Canvas, private readonly objectCanvas: Canvas) {
     this.world = new World(100);
     this.players = {};
     this.coins = {};
@@ -83,6 +83,7 @@ export class Game {
 
     this.updatePlayers((thisFrame - this.prevFrame) / 1000);
     this.updateViewPort(this.canvas);
+    this.updateViewPort(this.objectCanvas);
     this.draw();
 
     this.prevFrame = thisFrame;
@@ -123,25 +124,25 @@ export class Game {
       return;
     }
 
-    //this.flush();
+    this.flush(this.objectCanvas);
     this.drawObjects();
     this.drawInfo();
   }
 
-  flush() {
-    this.canvas.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+  flush(canvas: Canvas) {
+    canvas.context.clearRect(0, 0, canvas.width, canvas.height);
   }
 
   drawObjects() {
     this.world.draw(this.canvas);
     for (const key in this.coins) {
-      this.coins[key].draw(this.canvas);
+      this.coins[key].draw(this.objectCanvas);
     }
     for (const key in this.disappearingCoins) {
-      this.disappearingCoins[key].draw(this.canvas);
+      this.disappearingCoins[key].draw(this.objectCanvas);
     }
     for (const key in this.players) {
-      this.players[key].draw(this.canvas);
+      this.players[key].draw(this.objectCanvas);
     }
   }
 
