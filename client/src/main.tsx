@@ -4,6 +4,7 @@ import {
   StartImage,
   InfoModal,
   Flex,
+  Dim,
   BoldText,
   FormContainer,
   BestRecordModal,
@@ -54,13 +55,16 @@ export const Main = ({ name, topRank }) => {
   const [timer] = useTimer({
     precision: 'secondTenths',
   });
+  const [displayView, setDisplayView] = useState(true);
   setTimeout(() => {
     timer.start();
+    setDisplayView(false);
   }, 3000);
 
   return (
     <div>
       {bestRecord && <BestRecord name={name} setBestRecord={setBestRecord} />}
+      {displayView && <Dim />}
       <InfoModal left="0%">
         <Flex flexDirection="column" padding="30px">
           <Info title="Nickname" value={name} />

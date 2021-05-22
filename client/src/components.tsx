@@ -77,7 +77,6 @@ export const IntroModal = styled.div`
   background-color: #143c41;
   border-radius: 20px;
   position: absolute;
-  z-index: 100;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -129,7 +128,7 @@ export const TeamText = styled.text`
 
 export const LogoImage = styled(Logo)`
   position: absolute;
-  z-index: 150;
+  z-index: 1050;
   top: 15%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -146,8 +145,8 @@ export const StartImage = styled(Start)`
   left: 50%;
   opacity: 0;
   transform: translate(-50%, -50%);
-  width: 400px;
-  height: 70px;
+  width: 430px;
+  height: 200px;
   animation-name: ${startDisplayAnimation};
   animation-duration: 3s;
 `;
