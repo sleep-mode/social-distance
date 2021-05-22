@@ -36,7 +36,7 @@ export class CoinObject implements Drawable {
             offset.sw,
             offset.sh,
             Math.round(this.coin.x + canvas.viewPort - spriteSize.x / 2),
-            Math.round(canvas.height - spriteSize.y),
+            Math.round(canvas.height - spriteSize.y - 20),
             spriteSize.x,
             spriteSize.y
         );
