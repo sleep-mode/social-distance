@@ -2,17 +2,9 @@ import { Canvas } from './canvas';
 import { ctx } from './context';
 import { send } from './emit';
 import { World } from './world';
+import { Player } from './models/Player';
 
 let score = 0;
-
-export interface Player {
-  socketId: string;
-  nickname: string;
-  x: number;
-  y: number; // 거의 고정
-  coin: number;
-  direction: number; // 1 is right, -1 is left;
-}
 
 export class Game {
   constructor(private readonly canvas: Canvas) {
