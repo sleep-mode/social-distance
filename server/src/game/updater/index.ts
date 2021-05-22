@@ -30,10 +30,13 @@ export function updateCollision(state: GameState) {
       const player = players[i];
       if (player.type === PlayerType.ALIVE) {
         for (let j = Math.max(i - 2, 0); j < i + 2; j++) {
-          const others = players[j];
+          const other = players[j];
+          if (other == null) {
+            continue;
+          }
           let count = 0;
-          if (Math.abs(others.x - player.x) < 50) {
-            if (others.type === PlayerType.ZOMBIE) {
+          if (Math.abs(other.x - player.x) < 50) {
+            if (other.type === PlayerType.ZOMBIE) {
               count += 5;
             } else {
               count++;

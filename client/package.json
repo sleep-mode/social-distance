@@ -14,6 +14,7 @@
     "@types/react-dom": "^17.0.0",
     "axios": "^0.21.1",
     "easytimer-react-hook": "^1.0.3",
+    "easytimer.js": "^4.3.4",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
