@@ -9,7 +9,7 @@ export const BufferUtil = function () {
       return buf;
     },
     toString: function (binary) {
-      return String.fromCharCode.apply(null, new Uint8Array(binary));
+      return (String.fromCharCode as any).apply(null, new Uint8Array(binary));
     },
   };
 };

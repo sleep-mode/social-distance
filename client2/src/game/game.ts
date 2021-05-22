@@ -29,7 +29,7 @@ export class Game {
   private name = '';
 
   public start() {
-    addEventListener('keydown', this.handleKeyboard.bind(this));
+    window.addEventListener('keydown', this.handleKeyboard.bind(this));
   }
 
   handleKeyboard(event) {
