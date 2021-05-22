@@ -9,7 +9,7 @@ import { playBGM } from './utils/audio';
 let screenWidth = (window as any).innerWidth;
 let screenHeight = (window as any).innerHeight;
 
-function prepare(id: string) {
+function prepare (id: string) {
   const c: HTMLCanvasElement = (document as any).getElementById(id);
   if (c == null) {
     alert('No canvas found. retry');
@@ -22,7 +22,7 @@ function prepare(id: string) {
   c.width = screenWidth * ratio;
   c.height = screenHeight * ratio;
 
-  window.addEventListener('resize', function(event) {
+  window.addEventListener('resize', function (event) {
     let screenWidth = (window as any).innerWidth;
     let screenHeight = (window as any).innerHeight;
     let ratio: any = 800 / screenHeight;
@@ -41,7 +41,7 @@ function prepare(id: string) {
   return canvasObj;
 }
 
-export function startGame(name: string, host: string, port: string) {
+export function startGame (name: string, host: string) {
   const canvas = prepare('cvs');
   const objectCanvas = prepare('ocvs');
   if (canvas == null || objectCanvas == null) {
@@ -55,7 +55,7 @@ export function startGame(name: string, host: string, port: string) {
   ctx.playerName = name;
 
   //Set up socket
-  const socket = io(`http://${host}:${port}`, { transports: ['websocket'] });
+  const socket = io(`https://${host}`, { secure: true, transports: ['websocket'] });
   ctx.socket = socket;
 
   handleNetwork(socket, game);

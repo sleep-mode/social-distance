@@ -18,7 +18,7 @@ import { startGame } from './game/app';
 export const Intro = ({ name, setName, setDisplayIntro, topRank }) => {
   const handleStart = useCallback(() => {
     setTimeout(() => {
-      startGame(name, 'localhost', '5000');
+      startGame(name, 'server.sleep-mode.io');
     }, 3000);
   }, [name]);
 

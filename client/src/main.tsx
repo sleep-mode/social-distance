@@ -25,7 +25,7 @@ const BestRecord = ({ name, setBestRecord }) => {
           </BoldText>
           <StartButton
             onClick={() => {
-              startGame(name, 'localhost', '5000');
+              startGame(name, 'server.sleep-mode.io');
               setBestRecord(false);
             }}
           >
