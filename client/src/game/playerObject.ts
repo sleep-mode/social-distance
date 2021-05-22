@@ -110,7 +110,7 @@ export class PlayerObject implements Drawable {
   private getSpriteOffset() {
     const isZombie = this.player.type === PlayerType.ZOMBIE;
     const character = this.player.character;
-    const hasMask = false;
+    const hasMask = this.player.mask;
     const direction = this.player.direction;
     const animationFrame = Math.ceil((Date.now() / 100) % 2) - 1;
     return {

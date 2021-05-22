@@ -67,7 +67,7 @@ export class CoinObject implements Drawable {
         const animationFrame = Math.ceil((Date.now() / animSpeed) % 6) - 1;
         return {
             sx: Math.ceil(animationFrame * spriteSize.x),
-            sy: 0,
+            sy: this.coin.amount === 5 ? 0 : spriteSize.y,
             sw: spriteSize.x,
             sh: spriteSize.y,
         }
