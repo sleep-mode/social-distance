@@ -1,7 +1,6 @@
 import { Canvas } from './canvas';
 import { ctx } from './context';
 import { send } from './emit';
-import { Player } from './player';
 import { PlayerObject } from './playerObject';
 import { World } from './world';
 import { Player } from './models/Player';

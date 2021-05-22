@@ -1,7 +1,7 @@
 import { Canvas } from "./canvas";
 import { ctx } from "./context";
 import { Drawable } from "./drawable";
-import { Player } from "./player";
+import { Player } from "./models/Player";
 import CharacterImage from "./assets/Character.png";
 import { loadImage } from "./utility";
 
