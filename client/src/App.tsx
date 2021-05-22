@@ -6,8 +6,8 @@ import BackgroundImage from './img/bg_3.png';
 function App() {
   return (
     <Container style={{ backgroundImage: `url("${BackgroundImage}")` }}>
-      <Intro />
       {/* <Canvas id="cvs" /> */}
+      <Intro />
       <HallOfFame />
     </Container>
   );
