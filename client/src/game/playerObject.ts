@@ -64,7 +64,9 @@ export class PlayerObject implements Drawable {
   }
 
   public update(deltaTime: number) {
-    this.player.x += 300 * this.player.direction * deltaTime;
+    if (this.player.type !== PlayerType.DEAD) {
+      this.player.x += 300 * this.player.direction * deltaTime;
+    }
   }
 
   public sync(player: Player) {
@@ -114,13 +116,14 @@ export class PlayerObject implements Drawable {
   };
 
   private getSpriteOffset() {
-    const isZombie = this.player.type === PlayerType.ZOMBIE;
+    const isDead = this.player.type === PlayerType.DEAD;
+    const isZombie = isDead || this.player.type === PlayerType.ZOMBIE;
     const character = this.player.character;
     const hasMask = this.player.mask;
     const direction = this.player.direction;
     const animationFrame = Math.ceil((Date.now() / 100) % 2) - 1;
     return {
-      sx: (direction === 1 ? 0 : spriteSize.x * 3) + animationFrame * spriteSize.x,
+      sx: isDead ? 5 * spriteSize.x : ((direction === 1 ? 0 : spriteSize.x * 3) + animationFrame * spriteSize.x),
       sy: isZombie ? 0 : spriteSize.y * (1 + 2 * character + (hasMask ? 1 : 0)),
       sw: spriteSize.x,
       sh: spriteSize.y,
