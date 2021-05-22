@@ -2,8 +2,13 @@ import { Canvas } from "./canvas";
 import { ctx } from "./context";
 import { Drawable } from "./drawable";
 import { Player } from "./models/Player";
-import CharacterImage from "./assets/Character.png";
+import CharacterImage from "./assets/character.svg";
 import { loadImage } from "./utility";
+
+const spriteSize = {
+    x: 60,
+    y: 60,
+};
 
 let sprite: HTMLImageElement;
 loadImage(CharacterImage).then(res => {
@@ -43,7 +48,17 @@ export class PlayerObject implements Drawable {
             context.fillStyle = '#f0f';
         }
         const offset = this.getSpriteOffset();
-        context.drawImage(sprite, offset.sx, offset.sy, offset.sw, offset.sh, this.player.x + canvas.viewPort - 30, canvas.height - 60, 60, 60);
+        context.drawImage(
+            sprite,
+            offset.sx,
+            offset.sy,
+            offset.sw,
+            offset.sh,
+            this.player.x + canvas.viewPort - spriteSize.x / 2,
+            canvas.height - spriteSize.y,
+            spriteSize.x,
+            spriteSize.y
+        );
         context.fillText(this.socketId, this.player.x + canvas.viewPort, canvas.height - 65);
     };
 
@@ -52,10 +67,10 @@ export class PlayerObject implements Drawable {
         const direction = this.player.direction;
         const animationFrame = Math.ceil((Date.now() / 100) % 2) - 1;
         return {
-            sx: (direction === 1 ? 0 : 180) + animationFrame * 60,
-            sy: isMyPlayer ? 60 : 180,
-            sw: 60,
-            sh: 60,
+            sx: (direction === 1 ? 0 : spriteSize.x * 3) + animationFrame * spriteSize.x,
+            sy: isMyPlayer ? spriteSize.y : spriteSize.y * 3,
+            sw: spriteSize.x,
+            sh: spriteSize.y,
         }
     }
 }
