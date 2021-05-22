@@ -40,13 +40,13 @@ const BestRecord = ({ name, bestScore, setIsBestScore }) => {
   );
 };
 
-const Info = ({ title, value }) => {
+const Info = ({ title, value, coin = false }) => {
   return (
     <Flex flexDirection="column" mb="12px">
       <BoldText fontSize="20px" style={{ textShadow: '2px 2px 0 #000000' }}>
         {title}
       </BoldText>
-      <BoldText fontSize="40px" style={{ textShadow: '2px 2px 0 #000000' }}>
+      <BoldText fontSize="40px" id={coin ? 'coin-amount' : undefined} style={{ textShadow: '2px 2px 0 #000000' }}>
         {value}
       </BoldText>
     </Flex>
@@ -83,7 +83,7 @@ export const Main = ({ name, topRank, bestScore, setBestScore }) => {
             title="Best Time"
             value={bestScore ?? timer.getTimeValues().toString(['minutes', 'seconds', 'secondTenths'])}
           />
-          <Info title="Coin" value={'???'} />
+          <Info title="Coin" value={'0'} coin />
         </Flex>
       </InfoModal>
       <InfoModal right="0%" padding="10px">

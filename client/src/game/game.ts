@@ -7,6 +7,7 @@ import { Player } from './models/Player';
 import { CoinObject, disappearTime } from './coinObject';
 import { Coin } from './models/Coin';
 import { triggerSound } from './utils/audio';
+import { amountRenderer } from './amount';
 
 export class Game {
   private initialized = false;
@@ -26,7 +27,7 @@ export class Game {
 
   public async start() {
     this.initialized = true;
-
+    amountRenderer.findElement();
     window.addEventListener('keydown', this.handleKeyboard.bind(this));
     this.prevFrame = Date.now();
     //this.update();
@@ -82,6 +83,7 @@ export class Game {
     this.updatePlayers((thisFrame - this.prevFrame) / 1000);
     this.updateViewPort(this.canvas);
     this.updateViewPort(this.objectCanvas);
+    this.updateCoinAmount();
     this.draw();
 
     this.prevFrame = thisFrame;
@@ -93,6 +95,13 @@ export class Game {
   private updatePlayers(deltaTime: number) {
     for (const key in this.players) {
       this.players[key].update(deltaTime);
+    }
+  }
+
+  private updateCoinAmount() {
+    const myPlayer = this.players[ctx.clientId];
+    if (myPlayer) {
+      amountRenderer.render(myPlayer.getPlayer().coin);
     }
   }
 
