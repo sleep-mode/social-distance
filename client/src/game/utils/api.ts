@@ -4,8 +4,7 @@ import axios from 'axios';
 import { postScore, getHighScores } from './game/utils/api';
 
 postScore({
-  id: "test1234",
-  date: "2021-05-22",
+  id: clientId,
   nickname: name,
   message: "1등할거다",
   score: Math.floor(Math.random() * 1000)
@@ -14,11 +13,10 @@ getHighScores();
 */
 
 interface ScoreData {
-  id: string;
+  id: string; // clientId
   nickname: string;
   score: number;
   message: string;
-  date: string;
 }
 
 const reqApi = axios.create({
