@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Record } from './record';
 import {
   StartImage,
@@ -11,6 +11,7 @@ import {
   StartButton,
 } from './components';
 import { startGame } from './game/app';
+import useTimer from 'easytimer-react-hook';
 
 const leaderBoard = [
   // add api
@@ -52,6 +53,13 @@ const BestRecord = ({ name, setBestRecord }) => {
 
 export const Main = ({ name }) => {
   const [bestRecord, setBestRecord] = useState<boolean>(false);
+  const [timer] = useTimer({
+    precision: 'secondTenths',
+  });
+  setTimeout(() => {
+    timer.start();
+  }, 3000);
+
   return (
     <div>
       {bestRecord && <BestRecord name={name} setBestRecord={setBestRecord} />}
@@ -60,11 +68,11 @@ export const Main = ({ name }) => {
           <BoldText fontSize="20px">{'Nickname'}</BoldText>
           <BoldText fontSize="40px">{name}</BoldText>
           <BoldText fontSize="20px">{'Time'}</BoldText>
-          <BoldText fontSize="40px">{'00:00:00'}</BoldText>
+          <BoldText fontSize="40px">{timer.getTimeValues().toString(['minutes', 'seconds', 'secondTenths'])}</BoldText>
           <BoldText fontSize="20px">{'Best Time'}</BoldText>
-          <BoldText fontSize="40px">{'10:00:09'}</BoldText>
+          <BoldText fontSize="40px">{'--:--:-'}</BoldText>
           <BoldText fontSize="20px">{'Coin'}</BoldText>
-          <BoldText fontSize="40px">{'120'}</BoldText>
+          <BoldText fontSize="40px">{'???'}</BoldText>
         </Flex>
       </InfoModal>
       <InfoModal right="0%" padding="10px">

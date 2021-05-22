@@ -55,7 +55,7 @@ export const Container = styled.div`
 `;
 
 export const Canvas = styled.canvas`
-  height: 50vh;
+  height: 100vh;
   width: 100vw;
 `;
 
