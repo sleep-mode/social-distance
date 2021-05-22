@@ -115,6 +115,14 @@ export class Game {
       }
       send('CHANGE_DIRECTION');
     }
+    if ((event.keyCode || event.which) === 38) {
+      const myPlayer = this.players[ctx.clientId];
+      if (myPlayer) {
+        // known bug: if you revert direction first and press start again, it will not work
+        myPlayer.jump();
+      }
+      send('JUMP');
+    }
   }
 
   draw() {

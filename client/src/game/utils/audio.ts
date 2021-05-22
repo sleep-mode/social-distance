@@ -27,7 +27,7 @@ export function playBGM () {
   loopIt();
 }
 
-export function triggerSound (sound: 'coin' | 'gameover' | 'mask' | 'zombie') {
+export function triggerSound (sound: 'coin' | 'gameover' | 'mask' | 'zombie' | 'jump') {
   let audio = new Audio();
   audio.src = `/audio/${sound}.wav`;
 

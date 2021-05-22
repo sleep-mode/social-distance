@@ -7,6 +7,7 @@ import HPLeftImage from './assets/bar-l.png';
 import HPCenterImage from './assets/bar-c.png';
 import HPRightImage from './assets/bar-r.png';
 import { loadImage } from './utility';
+import { triggerSound } from './utils/audio';
 
 const spriteSize = {
   x: 60,
@@ -30,17 +31,36 @@ Promise.all(pendingImages).then(images => {
     hpImages = images;
 });
 
+const jumpTime = 0.5;
+const jumpHeight = 960;
+
 export class PlayerObject implements Drawable {
   private socketId: string;
   private player: Player;
-  private sprite?: HTMLImageElement;
+  private isJumping: boolean;
+  private jumpStartedTime: number;
+
   constructor(player: Player) {
     this.player = player;
     this.socketId = player.socketId;
+    this.isJumping = false;
+    this.jumpStartedTime = 0;
   }
 
   public getPlayer(): Player {
     return this.player;
+  }
+
+  public jump() {
+    if (this.isJumping) return;
+
+    if (this.player.socketId === ctx.clientId) {
+      triggerSound('jump');
+    }
+    this.isJumping = true;
+    this.jumpStartedTime = Date.now();
+
+    setTimeout(() => {this.isJumping = false;}, jumpTime * 1000);
   }
 
   public update(deltaTime: number) {
@@ -57,7 +77,7 @@ export class PlayerObject implements Drawable {
     const context = canvas.context;
     const offset = this.getSpriteOffset();
     const x = Math.round(this.player.x + canvas.viewPort - spriteSize.x / 2);
-    const y = canvas.height - spriteSize.y - 20;
+    const y = canvas.height - spriteSize.y - 20 + this.getJumpHeight();
 
     if (this.player.socketId === ctx.clientId) {
         const hp = Math.max(0, this.player.hp);
@@ -68,11 +88,11 @@ export class PlayerObject implements Drawable {
         const centerLength = hpLength - sideLength * 2;
 
         let hpX = x + basicOffset + hpOffset;
-        context.drawImage(hpImages[0], hpX, y - 12, sideLength, 4);
+        context.drawImage(hpImages[0], hpX, Math.round(y - 12), sideLength, 4);
         hpX += sideLength;
-        context.drawImage(hpImages[1], hpX, y - 12, centerLength, 4);
+        context.drawImage(hpImages[1], hpX, Math.round(y - 12), centerLength, 4);
         hpX += centerLength;
-        context.drawImage(hpImages[2], hpX, y - 12, sideLength, 4);
+        context.drawImage(hpImages[2], hpX, Math.round(y - 12), sideLength, 4);
     }
     context.drawImage(
       sprite,
@@ -81,7 +101,7 @@ export class PlayerObject implements Drawable {
       offset.sw,
       offset.sh,
       x,
-      y,
+      Math.round(y),
       spriteSize.x,
       spriteSize.y
     );
@@ -98,5 +118,14 @@ export class PlayerObject implements Drawable {
       sw: spriteSize.x,
       sh: spriteSize.y,
     };
+  }
+
+  private getJumpHeight() {
+    if (this.isJumping) {
+      const t = (Date.now() - this.jumpStartedTime) / 1000;
+      return -jumpHeight * (-Math.pow(t - jumpTime / 2, 2) + jumpTime * jumpTime / 4);
+    } else {
+      return 0;
+    }
   }
 }
