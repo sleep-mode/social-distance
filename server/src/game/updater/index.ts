@@ -1,8 +1,10 @@
 import { GameState } from '../GameState';
 import { Server } from 'socket.io';
 import { config } from '../../config';
-import { Coin, createCoin } from '../entity/Coin';
-import { PlayerObject, PlayerType } from '../entity/Player';
+import { createCoin } from '../entity/Coin';
+import { PlayerObject } from '../entity/Player';
+import { PlayerType } from '../model/Player';
+import { Coin } from '../model/Coin';
 
 const MAX_COIN_COUNT = 30;
 
