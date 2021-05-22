@@ -1,23 +1,5 @@
 import axios from 'axios';
-
-/* Example
-import { postScore, getHighScores } from './game/utils/api';
-
-postScore({
-  id: clientId,
-  nickname: name,
-  message: "1등할거다",
-  score: Math.floor(Math.random() * 1000)
-});
-getHighScores();
-*/
-
-interface ScoreData {
-  id: string; // clientId
-  nickname: string;
-  score: number;
-  message: string;
-}
+import { encodeScore, decodeScore } from "./helpers";
 
 const reqApi = axios.create({
   baseURL: 'https://gylmaxhi6e.execute-api.ap-northeast-2.amazonaws.com/',
@@ -26,16 +8,17 @@ const reqApi = axios.create({
 
 export async function getHighScores () {
   let req = await reqApi.get(`/scores?limit=9`);
-  return req.data.Items;
+  return req.data.Items.map(item => {
+    return { name: item.name, time: decodeScore(item.score)}
+  });
 }
 
-export async function postScore (score: ScoreData) {
+export async function postScore (name, time) {
+  const score = encodeScore(time);
   let req = await reqApi.post(`/scores`, {
-    id: score.id,
     date: new Date().toISOString().substring(0, 10),
-    name: score.nickname,
-    msg: score.message,
-    score: score.score
+    name,
+    score
   });
   return req;
 }

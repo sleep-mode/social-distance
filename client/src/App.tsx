@@ -13,6 +13,7 @@ function App() {
     };
     getRanking();
   }, []);
+  const [bestScore, setBestScore] = useState(null);
   const [displayIntro, setDisplayIntro] = useState(true);
   const [topRank, setTopRank] = useState();
   const [name, setName] = useState('');
@@ -21,7 +22,7 @@ function App() {
       {displayIntro ? (
         <Intro topRank={topRank} name={name} setName={setName} setDisplayIntro={setDisplayIntro} />
       ) : (
-        <Main topRank={topRank} name={name} />
+        <Main topRank={topRank} name={name} bestScore={bestScore} setBestScore={setBestScore} />
       )}
       <Canvas style={{ zIndex: 1 }} id="cvs" />
       <Canvas style={{ zIndex: 2 }} id="ocvs" />
