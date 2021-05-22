@@ -22,20 +22,52 @@ export function updatePlayerLocation(state: GameState) {
  */
 export function updateCollision(state: GameState) {
   return () => {
-    /*
-    const alives: Player[] = [];
-    const zombies: Player[] = [];
+    const players = Object.values(state.players).sort((a, b) => a.x - b.x);
 
-    const damanged: Player[] = [];
-
-    for (const player of Object.values(state.players)) {
+    /** HP 감소 */
+    const playersToBeDamaged: Player[] = [];
+    for (let i = 0; i < players.length; i++) {
+      const player = players[i];
       if (player.type === PlayerType.ALIVE) {
-        alives.push(player);
-      } else if (player.type === PlayerType.ZOMBIE) {
-        zombies.push(player);
+        for (let j = Math.max(i - 2, 0); j < i + 2; j++) {
+          const other = players[j];
+          if (other == null) {
+            continue;
+          }
+          let count = 0;
+          if (Math.abs(other.x - player.x) < 50) {
+            if (other.type === PlayerType.ZOMBIE) {
+              count += 5;
+            } else {
+              count++;
+            }
+
+            if (count >= 5) {
+              playersToBeDamaged.push(player);
+            }
+          }
+        }
+      }
+      // TODO 좀비 일 경우 처리
+    }
+
+    for (const player of playersToBeDamaged) {
+      player.hp--;
+      if (player.hp <= 0) {
+        player.type = PlayerType.ZOMBIE;
+        player.hp = 5; // 다시 MAX_HP로
       }
     }
-    */
+
+    /** 코인 줍줍 */
+    for (const coin of state.coins) {
+      for (const player of players) {
+        if (Math.abs(coin.x - player.x) < 30) {
+          state.coins.delete(coin);
+          player.coin++;
+        }
+      }
+    }
   };
 }
 
@@ -45,7 +77,7 @@ export function updateCollision(state: GameState) {
 export function updateCoinGeneration(state: GameState) {
   return () => {
     if (shouldGenerateCoin(state)) {
-      state.coins.push(...generateCoins(state));
+      generateCoins(state).forEach(coin => state.coins.add(coin));
     }
   };
 }
@@ -76,7 +108,7 @@ function shouldGenerateCoin(state: GameState) {
  * 새 코인 생성
  */
 function generateCoins(state: GameState): Coin[] {
-  if (state.coins.length > MAX_COIN_COUNT) {
+  if (state.coins.size > MAX_COIN_COUNT) {
     return [];
   }
 

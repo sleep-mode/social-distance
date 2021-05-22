@@ -1,28 +1,38 @@
-import BackgroundImage from './assets/bg_1.png';
+import BackgroundImage1 from './assets/bg-1.png';
+import BackgroundImage2 from './assets/bg-2.png';
+import BackgroundImage3 from './assets/bg-3.png';
+import BackgroundImage4 from './assets/bg-4.png';
+import BackgroundImage5 from './assets/bg-5.png';
+
 import { Canvas } from './canvas';
 import { Drawable } from './drawable';
 import { loadImage } from './utility';
 
+const pendingImages = [
+    BackgroundImage1,
+    BackgroundImage2,
+    BackgroundImage3,
+    BackgroundImage4,
+    BackgroundImage5,
+].map(loadImage);
+
+let backgrounds: HTMLImageElement[];
+Promise.all(pendingImages).then(images => {
+    backgrounds = images;
+});
+
 export class World implements Drawable {
-    private bg?: HTMLImageElement;
     private width: number;
-    private initialized: boolean;
 
     constructor(width: number) {
         this.width = width;
-        this.initialized = false;
-    }
-
-    async initialize() {
-        this.bg = await loadImage(BackgroundImage);
-        this.initialized = true;
     }
 
     draw = (canvas: Canvas) => {
-        if (!this.initialized) return;
+        if (!backgrounds) return;
 
-        if (this.bg != null) {
-            canvas.context.drawImage(this.bg, canvas.viewPort, canvas.height - this.bg.height, this.bg.width, this.bg.height);
-        }
+        backgrounds.forEach((bg, index) => {
+            canvas.context.drawImage(bg, canvas.viewPort + index * bg.width, canvas.height - bg.height, bg.width, bg.height);
+        });
     }
 }

@@ -3,13 +3,13 @@ import { Coin } from './entity/Coin';
 
 export class GameState {
   players: Record<string, Player>;
-  coins: Coin[];
+  coins: Set<Coin>;
   startedAt: number;
   lastCoinGeneratedAt: number;
 
   constructor() {
     this.players = {};
-    this.coins = [];
+    this.coins = new Set();
     this.startedAt = Date.now();
     this.lastCoinGeneratedAt = Date.now();
   }
@@ -17,7 +17,7 @@ export class GameState {
   serialize() {
     return {
       players: Object.values(this.players),
-      coins: this.coins,
+      coins: Array.from(this.coins.values()),
     };
   }
 }
