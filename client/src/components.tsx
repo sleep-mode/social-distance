@@ -4,6 +4,8 @@ import { ReactComponent as Logo } from './img/img_main_logo.svg';
 import { ReactComponent as Start } from './img/start.svg';
 import { ReactComponent as Mask } from './img/btn-mask.svg';
 import { ReactComponent as Injector } from './img/btn-injector.svg';
+import { ReactComponent as RightArrow } from './img/right_arrow.svg';
+import { ReactComponent as LeftArrow } from './img/left_arrow.svg';
 import {
   alignItems,
   AlignItemsProps,
@@ -178,12 +180,13 @@ export const StartButton = styled.div`
   height: 70px;
   cursor: pointer;
   text-align: center;
+  line-height: 70px;
   align-self: center;
   border: 1px solid rgba(27, 28, 37, 0.1);
   border-radius: 10px;
-  margin: 150px 0 0px;
+  margin: 110px 0 0px;
   font-family: Quicksand;
-  font-size: 20px;
+  font-size: 30px;
   font-weight: bold;
   background-color: #94e806;
 `;
@@ -321,28 +324,27 @@ export const Shortcut = styled.p`
   text-align: center;
   color: #ffffff;
 `;
-export const CharacterBox = styled.div`
+export const CharacterBox = styled.img`
   width: 180px;
   height: 180px;
   margin: 20px 0;
   padding: 20px;
+  cursor: pointer;
   border-radius: 10px;
   border: solid 1px #a2ff00;
   background-color: rgba(223, 223, 223, 0.1);
 `;
 
-export const LeftArrow = styled.div`
-  width: 40px;
-  height: 30px;
-  margin: 203px 135px 277px 0;
-  transform: rotate(-90deg);
-  background-color: #94e806;
+export const LeftButton = styled(LeftArrow)`
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  margin: 10px 30px 30px 30px;
 `;
 
-export const RightArrow = styled.div`
-  width: 40px;
-  height: 30px;
-  margin: 203px 75px 277px 230px;
-  transform: rotate(-90deg);
-  background-color: #94e806;
+export const RightButton = styled(RightArrow)`
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  margin: 10px 30px 30px 30px;
 `;

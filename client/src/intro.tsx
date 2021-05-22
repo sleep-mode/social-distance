@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import {
   Dim,
   BoldText,
@@ -12,19 +12,34 @@ import {
   JunctionText,
   Flex,
   CharacterBox,
+  LeftButton,
+  RightButton,
 } from './components';
 import { Record } from './record';
 import { startGame } from './game/app';
-const CharacterSelection = () => {
+import Taco from './img/Taco.png';
+import Semo from './img/Semo.png';
+import Seji from './img/Seji.png';
+import Nabi from './img/Nabi.png';
+import Cana from './img/Cana.png';
+import Simo from './img/Simo.png';
+
+const CHARACTERS = { TACO: Taco, SEMO: Semo, SEJI: Seji, NABI: Nabi, CANA: Cana, SIMO: Simo };
+
+const CharacterSelection = ({ index }) => {
+  const selectedCharacter = Object.entries(CHARACTERS)[index];
   return (
     <Flex flexDirection="column">
-      <CharacterBox />
-      <Flex></Flex>
+      <CharacterBox src={selectedCharacter[1]} />
+      <BoldText style={{ textShadow: '1px 1px 0 #000000', alignSelf: 'center' }}>{selectedCharacter[0]}</BoldText>
     </Flex>
   );
 };
+const random = (min, max) => Math.floor(Math.random() * (max - min)) + min;
 
 export const Intro = ({ name, setName, setDisplayIntro, topRank }) => {
+  const CHARACTER_LENGTH = Object.keys(CHARACTERS).length;
+  const [characterIndex, setCharacterIndex] = useState(random(0, CHARACTER_LENGTH));
   const handleStart = useCallback(() => {
     setTimeout(() => {
       startGame(name, 'server.sleep-mode.io');
@@ -40,8 +55,14 @@ export const Intro = ({ name, setName, setDisplayIntro, topRank }) => {
       <IntroModal>
         <Flex mt="30px">
           <FormContainer width="400px">
-            <BoldText>Character</BoldText>
-            <CharacterSelection />
+            <BoldText style={{ alignSelf: 'center', paddingRight: '70px' }}>Character</BoldText>
+            <Flex alignItems="center">
+              <LeftButton
+                onClick={() => setCharacterIndex((characterIndex - 1 + CHARACTER_LENGTH) % CHARACTER_LENGTH)}
+              />
+              <CharacterSelection index={characterIndex} />
+              <RightButton onClick={() => setCharacterIndex((characterIndex + 1) % CHARACTER_LENGTH)} />
+            </Flex>
           </FormContainer>
           <FormContainer width="500px">
             <BoldText>Nickname</BoldText>
@@ -66,15 +87,17 @@ export const Intro = ({ name, setName, setDisplayIntro, topRank }) => {
             </Flex>
           </FormContainer>
         </Flex>
-        <StartButton
-          onClick={() => {
-            !name && setName('후치');
-            handleStart();
-            setDisplayIntro(false);
-          }}
-        >
-          START
-        </StartButton>
+        <Flex justifyContent="center">
+          <StartButton
+            onClick={() => {
+              !name && setName('후치');
+              handleStart();
+              setDisplayIntro(false);
+            }}
+          >
+            START
+          </StartButton>
+        </Flex>
       </IntroModal>
     </WideContainer>
   );
