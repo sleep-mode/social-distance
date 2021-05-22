@@ -52,7 +52,7 @@ export class Game {
     // }.bind(this);
     //
     this.canvas.fillStyle = '#222';
-    this.canvas.fillRect(0, 400, window.innerWidth, 200);
+    this.canvas.fillRect(0, 100, window.innerWidth, 200);
 
     /*
     const dummyPositions = [100, 500, 600, 1200, 1300, 1400, 1500];
@@ -73,7 +73,7 @@ export class Game {
       } else {
         this.canvas.fillStyle = '#f0f';
       }
-      this.canvas.arc(player.x, 500, 30, 0, Math.PI * 2, true);
+      this.canvas.arc(player.x, 200, 30, 0, Math.PI * 2, true);
       this.canvas.fill();
       this.canvas.fillText(playerId, player.x, player.y + 20);
     }

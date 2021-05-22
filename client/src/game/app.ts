@@ -31,9 +31,11 @@ function prepare() {
 
   const ratio: any = PIXEL_RATIO;
   c.width = screenWidth * ratio;
-  c.height = screenHeight * ratio;
-  c.style.width = screenWidth + 'px';
-  c.style.height = screenHeight + 'px';
+  c.height = (screenHeight * ratio) / 2;
+
+  // c.style.width = screenWidth + 'px';
+  // c.style.height = screenHeight + 'px';
+
   canvas.setTransform(ratio, 0, 0, ratio, 0, 0);
   return canvas;
 }
@@ -70,8 +72,8 @@ export function startGame(name: string, host: string, port: string) {
 // }
 
 //Check if nick is alphanumeric
-function validNick() {
-  const regex = /^\w*$/;
-  console.log('Regex Test', regex.exec(ctx.playerNameInput.value));
-  return regex.exec(ctx.playerNameInput.value) !== null;
-}
+// function validNick() {
+//   const regex = /^\w*$/;
+//   console.log('Regex Test', regex.exec(ctx.playerNameInput.value));
+//   return regex.exec(ctx.playerNameInput.value) !== null;
+// }
