@@ -95,7 +95,9 @@ export class Game {
     const context = this.canvas.context;
 
     for (const player of this.players) {
-      new PlayerObject(player).draw(this.canvas);
+      let pObj = new PlayerObject(player);
+      pObj.initialize();
+      pObj.draw(this.canvas);
     }
   }
 }
