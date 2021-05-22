@@ -8,27 +8,31 @@ import { loadImage } from "./utility";
 let sprite: HTMLImageElement;
 loadImage(CharacterImage).then(res => {
     sprite = res;
-    console.log(res);
 });
 
 export class PlayerObject implements Drawable {
     private socketId: string;
     private player: Player;
     private sprite?: HTMLImageElement;
-    private initialized: boolean;
     constructor(player: Player) {
         this.player = player;
         this.socketId = player.socketId;
-        this.initialized = false;
     }
 
-    async initialize() {
-        //this.sprite = await loadImage(CharacterImage);
-        this.initialized = true;
+    public getPlayer(): Player {
+        return this.player;
+    }
+
+    public update(deltaTime: number) {
+        this.player.x += 300 * this.player.direction * deltaTime;
+    }
+
+    public sync(player: Player) {
+        this.player = player;
     }
 
     draw: (canvas: Canvas) => void = (canvas) => {
-        if (!this.initialized || !sprite) return;
+        if (!sprite) return;
 
         const context = canvas.context;
 
