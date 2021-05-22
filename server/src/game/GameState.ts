@@ -1,3 +1,23 @@
-import { ctx } from '../context';
+import { Player } from './Player';
 
-function serializeState() {}
+class Coin {
+  x: number;
+  y: number;
+}
+
+export class GameState {
+  players: Map<string, Player>;
+  coins: Map<string, Coin>;
+
+  constructor() {
+    this.players = new Map();
+    this.coins = new Map();
+  }
+
+  serialize() {
+    return {
+      players: this.players.values(),
+      coins: this.coins.values(),
+    };
+  }
+}

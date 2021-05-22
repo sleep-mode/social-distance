@@ -1,11 +1,11 @@
-import { clientManager } from '../client';
-import { update } from './update';
 import { config } from '../config';
+
+export type LoopCallback = (delta: number) => void;
 
 /**
  * Main server logic - handle everything game-related here
  */
-export function startLoop() {
+export function loop(...callbacks: LoopCallback[]) {
   /**
     Length of a tick in milliseconds. The denominator is your desired framerate.
     e.g. 1000 / 20 = 20 fps,  1000 / 60 = 60 fps
@@ -29,8 +29,9 @@ export function startLoop() {
        *  a function that takes 10 milliseconds to complete thus simulating that our game
        *  had a very busy time.
        */
-      update(delta);
-      clientManager.broadcast();
+      for (const calback of callbacks) {
+        calback(delta);
+      }
     }
 
     if (Date.now() - previousTick < tickLengthMs - 16) {

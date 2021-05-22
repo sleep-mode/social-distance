@@ -19,7 +19,6 @@
   },
   "devDependencies": {
     "@types/cors": "^2.8.10",
-    "@types/engine.io": "^3.1.5",
     "@types/express": "^4.17.11",
     "@types/jest": "^26.0.20",
     "@types/node": "^14.14.31",
@@ -34,7 +33,6 @@
   },
   "dependencies": {
     "cors": "^2.8.5",
-    "engine.io": "^5.1.1",
     "express": "^4.17.1",
     "socket.io": "^4.1.2"
   }

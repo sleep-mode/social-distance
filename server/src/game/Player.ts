@@ -5,7 +5,14 @@ interface PlayerProps {
   x: number;
   y: number; // 거의 고정
   coin: number;
+  type?: PlayerType;
   direction?: number; // 1 is right, 0 is left;
+}
+
+export enum PlayerType {
+  ALIVE,
+  DEAD,
+  CORONA,
 }
 
 export class Player {
@@ -14,19 +21,32 @@ export class Player {
   x: number;
   y: number; // 거의 고정
   coin: number;
+  hp: number;
+  type: PlayerType;
   direction: number; // 1 is right, -1 is left;
 
-  constructor({ coin, direction = 1, nickname, socketId, x, y }: PlayerProps) {
+  constructor({ coin, direction = 1, nickname, socketId, x, y, type = PlayerType.ALIVE }: PlayerProps) {
     this.coin = coin;
     this.direction = direction;
     this.nickname = nickname;
     this.socketId = socketId;
+    this.hp = 5;
     this.x = x;
     this.y = y;
+    this.type = type;
   }
 
   changeDirection() {
     this.direction = this.direction * -1;
+  }
+
+  damanged(amount = 1) {
+    if (this.type === PlayerType.ALIVE) {
+      this.hp - amount;
+      if (this.hp <= 0) {
+        this.type = PlayerType.CORONA;
+      }
+    }
   }
 
   update(delta: number) {

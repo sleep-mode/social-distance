@@ -1,4 +1,5 @@
 import { Socket, Server } from 'socket.io';
+import { config } from './config';
 import { clientManager } from './client';
 import { GameServer } from './game/GameServer';
 
@@ -7,6 +8,7 @@ export function handleConnection(io: Server, gameServer: GameServer) {
     console.log(`[connect]: ${socket.id}`);
     if (!clientManager.exist(socket.id)) {
       clientManager.add(socket);
+      socket.join(config.roomName);
     }
     gameServer.onConnect(socket);
 
