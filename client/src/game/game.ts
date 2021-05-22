@@ -123,6 +123,12 @@ export class Game {
       }
       send('JUMP');
     }
+    if ((event.keyCode || event.which) === 77) {
+      send('MASK');
+    }
+    if ((event.keyCode || event.which) === 72) {
+      send('HEAL');
+    }
   }
 
   draw() {
@@ -154,7 +160,6 @@ export class Game {
 
   drawInfo() {
     // const context = this.canvas.context;
-
     // context.fillStyle = '#FFF';
     // context.font = '12px Tahoma';
     // const playerCount = Object.keys(this.players).length;

@@ -8,6 +8,7 @@ export class PlayerObject implements Player {
     public x: number,
     public y: number, // 거의 고정
     public hp: number,
+    public mask: boolean,
     public coin: number,
     public type: PlayerType,
     public character: Character,
