@@ -49,7 +49,7 @@ export function handleMessage({ state }: Dependencies, { action, params, socketI
 
   if (action === 'MASK') {
     const player = state.players[socketId];
-    if (player.coin >= 10) {
+    if (player.mask === false && player.coin >= 10) {
       player.coin -= 10;
       player.mask = true;
       setTimeout(() => {

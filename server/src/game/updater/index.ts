@@ -30,6 +30,7 @@ export function updatePersonCollision(state: GameState) {
     const playersToBeDamaged: PlayerObject[] = [];
     for (let i = 0; i < players.length; i++) {
       const player = players[i];
+      if (player.mask) continue;
       if (player.type === PlayerType.ALIVE) {
         for (let j = Math.max(i - 2, 0); j < i + 2; j++) {
           const other = players[j];
