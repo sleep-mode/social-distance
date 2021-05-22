@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import {
+  Dim,
   BoldText,
   IntroModal,
   LogoImage,
@@ -23,6 +24,7 @@ export const Intro = ({ name, setName, setDisplayIntro, topRank }) => {
 
   return (
     <WideContainer height="60vh">
+      <Dim />
       <JunctionText>JunctionX Seoul x aws</JunctionText>
       <LogoImage />
       <TeamText>Team_SleepMode</TeamText>

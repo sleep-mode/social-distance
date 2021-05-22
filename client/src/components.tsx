@@ -88,6 +88,7 @@ export const IntroModal = styled.div`
 export const JunctionText = styled.text`
   height: 30px;
   position: absolute;
+  z-index: 80;
   text-shadow: 2px 2px 10px #000000;
   font-family: Quicksand;
   font-size: 34px;
@@ -108,6 +109,7 @@ export const TeamText = styled.text`
   width: 218px;
   height: 30px;
   position: absolute;
+  z-index: 80;
   text-shadow: 2px 2px 10px #000000;
   font-family: Quicksand;
   font-size: 24px;
@@ -126,7 +128,7 @@ export const TeamText = styled.text`
 
 export const LogoImage = styled(Logo)`
   position: absolute;
-  z-index: 100;
+  z-index: 1050;
   top: 15%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -138,13 +140,13 @@ export const LogoImage = styled(Logo)`
 
 export const StartImage = styled(Start)`
   position: absolute;
-  z-index: 100;
+  z-index: 150;
   top: 45%;
   left: 50%;
   opacity: 0;
   transform: translate(-50%, -50%);
-  width: 400px;
-  height: 70px;
+  width: 430px;
+  height: 200px;
   animation-name: ${startDisplayAnimation};
   animation-duration: 3s;
 `;
@@ -229,6 +231,7 @@ export const InfoModal = styled.div<PositionProps & SpaceProps>`
   height: 420px;
   background-color: #143c41;
   position: absolute;
+  z-index: 300;
   overflow: hidden;
   top: 0%;
   opacity: 0.7;
@@ -242,4 +245,13 @@ export const BestRecordModal = styled.div`
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
+`;
+
+export const Dim = styled.div`
+  position: absolute;
+  z-index: 50;
+  width: 100vw;
+  height: 100vh;
+  opacity: 0.8;
+  background-color: #143c41;
 `;

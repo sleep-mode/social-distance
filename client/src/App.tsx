@@ -23,8 +23,8 @@ function App() {
       ) : (
         <Main topRank={topRank} name={name} />
       )}
-      <Canvas style={{zIndex: 1}} id="cvs" />
-      <Canvas style={{zIndex: 2}} id="ocvs" />
+      <Canvas style={{ zIndex: 1 }} id="cvs" />
+      <Canvas style={{ zIndex: 2 }} id="ocvs" />
     </Container>
   );
 }
