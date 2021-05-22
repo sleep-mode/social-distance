@@ -30,6 +30,7 @@ export function updatePersonCollision(state: GameState) {
     const playersToBeDamaged: PlayerObject[] = [];
     for (let i = 0; i < players.length; i++) {
       const player = players[i];
+      if (player.mask) continue;
       if (player.type === PlayerType.ALIVE) {
         for (let j = Math.max(i - 2, 0); j < i + 2; j++) {
           const other = players[j];
@@ -52,7 +53,8 @@ export function updatePersonCollision(state: GameState) {
       }
 
       /** default hp decresing */
-      player.hp -= 0.2;
+      /** Zombie loose more */
+      player.hp -= player.type === PlayerType.ALIVE ? 0.2 : 0.5;
     }
 
     for (const player of playersToBeDamaged) {
@@ -66,12 +68,13 @@ export function updateCoinCollision(state: GameState) {
     /** 코인 줍줍 */
     for (const coin of state.coins) {
       for (const player of Object.values(state.players)) {
-        if (player.type === PlayerType.ZOMBIE) {
+        if (player.type !== PlayerType.ALIVE) {
           continue;
         }
+
         if (Math.abs(coin.x - player.x) < 30) {
           state.coins.delete(coin);
-          player.coin++;
+          player.coin += coin.amount;
         }
       }
     }
@@ -89,8 +92,7 @@ export function updatePlayerState(state: GameState) {
         player.type = PlayerType.ZOMBIE;
         player.hp = 100;
       } else if (player.type === PlayerType.ZOMBIE) {
-        /** Remove player and  */
-        // state
+        player.type = PlayerType.DEAD;
       }
     }
   };
@@ -137,11 +139,11 @@ function generateCoins(state: GameState): Coin[] {
     return [];
   }
 
-  const COIN_GENERATION_COUNT = 3;
+  const COIN_GENERATION_COUNT = 5;
   const coins: Coin[] = [];
 
   for (let i = 0; i < COIN_GENERATION_COUNT; i++) {
-    coins.push(createCoin(config.mapWidth * Math.random(), 1));
+    coins.push(createCoin(config.mapWidth * Math.random(), Math.random() > 0.8 ? 5 : 1));
   }
 
   return coins;

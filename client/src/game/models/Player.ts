@@ -5,6 +5,7 @@ export interface Player {
   y: number; // 거의 고정
   hp: number;
   coin: number;
+  mask: boolean;
   type: PlayerType;
   character: Character;
   direction: number; // 1 is right, 0 is left;
