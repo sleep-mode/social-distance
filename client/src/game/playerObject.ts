@@ -40,13 +40,6 @@ export class PlayerObject implements Drawable {
     if (!sprite) return;
 
     const context = canvas.context;
-
-    if (this.socketId === ctx.clientId) {
-      context.font = '12px Tahoma';
-      context.fillStyle = '#fff';
-    } else {
-      context.fillStyle = '#f0f';
-    }
     const offset = this.getSpriteOffset();
     context.drawImage(
       sprite,
@@ -59,7 +52,6 @@ export class PlayerObject implements Drawable {
       spriteSize.x,
       spriteSize.y
     );
-    context.fillText(this.socketId, this.player.x + canvas.viewPort, canvas.height - 65);
   };
 
   private getSpriteOffset() {

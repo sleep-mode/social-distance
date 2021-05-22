@@ -4,7 +4,7 @@ import { send } from './emit';
 import { PlayerObject } from './playerObject';
 import { World } from './world';
 import { Player } from './models/Player';
-import { CoinObject } from './coinObject';
+import { CoinObject, disappearTime } from './coinObject';
 import { Coin } from './models/Coin';
 import { triggerSound } from './utils/audio';
 
@@ -16,12 +16,14 @@ export class Game {
   private prevFrame: number = Date.now();
   private world: World;
   private coins: Record<number, CoinObject>;
+  private disappearingCoins: Record<number, CoinObject>;
   private players: Record<string, PlayerObject>;
 
   constructor(private readonly canvas: Canvas) {
     this.world = new World(100);
     this.players = {};
     this.coins = {};
+    this.disappearingCoins = {};
   }
 
   public async start() {
@@ -46,7 +48,14 @@ export class Game {
     for (const id of Object.keys(this.coins)) {
       if (!ids.includes(Number(id))) {
         // show animation
+        const coin = this.coins[id];
         delete this.coins[id];
+        coin.disappear();
+        this.disappearingCoins[id] = coin;
+        setTimeout(() => {
+          delete this.disappearingCoins[id];
+        }, disappearTime * 1000);
+        triggerSound('coin');
       }
     }
   }
@@ -107,7 +116,6 @@ export class Game {
       }
       send('CHANGE_DIRECTION');
     }
-    triggerSound('coin');
   }
 
   draw() {
@@ -128,6 +136,9 @@ export class Game {
     this.world.draw(this.canvas);
     for (const key in this.coins) {
       this.coins[key].draw(this.canvas);
+    }
+    for (const key in this.disappearingCoins) {
+      this.disappearingCoins[key].draw(this.canvas);
     }
     for (const key in this.players) {
       this.players[key].draw(this.canvas);
