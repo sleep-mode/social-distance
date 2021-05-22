@@ -21,6 +21,10 @@ export class CoinObject implements Drawable {
         this.coin = coin;
     }
 
+    public sync(coin: Coin) {
+        this.coin = coin;
+    }
+
     draw: (canvas: Canvas) => void = (canvas) => {
         if (!sprite) return;
 
@@ -31,8 +35,8 @@ export class CoinObject implements Drawable {
             offset.sy,
             offset.sw,
             offset.sh,
-            this.coin.x + canvas.viewPort - spriteSize.x / 2,
-            canvas.height - spriteSize.y,
+            Math.round(this.coin.x + canvas.viewPort - spriteSize.x / 2),
+            Math.round(canvas.height - spriteSize.y),
             spriteSize.x,
             spriteSize.y
         );
