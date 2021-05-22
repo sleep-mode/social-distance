@@ -1,5 +1,7 @@
 import BackgroundImage from './assets/bg_1.png';
+import { Canvas } from './canvas';
 import { Drawable } from './drawable';
+import { Player } from './game';
 
 export class World implements Drawable {
     private bg?: HTMLImageElement;
@@ -26,11 +28,11 @@ export class World implements Drawable {
         });
     }
 
-    draw = (canvas: CanvasRenderingContext2D) => {
+    draw = (canvas: Canvas) => {
         if (!this.initialized) return;
 
         if (this.bg != null) {
-            canvas.drawImage(this.bg, 0, 0, window.innerWidth, window.innerHeight);
+            canvas.context.drawImage(this.bg, canvas.viewPort, canvas.height - this.bg.height, this.bg.width, this.bg.height);
         }
     }
 }
