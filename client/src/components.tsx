@@ -232,6 +232,7 @@ export const InfoModal = styled.div<PositionProps & SpaceProps>`
   height: 420px;
   background-color: #143c41;
   position: absolute;
+  z-index: 300;
   overflow: hidden;
   top: 0%;
   opacity: 0.7;
