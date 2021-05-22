@@ -9,6 +9,7 @@
     "build": "tsc",
     "test": "NODE_ENV=test jest",
     "lint": "eslint . --ext .js,.ts",
+    "serve": "ts-node dist/index.js",
     "start": "ts-node src/index.ts",
     "test:debug": "node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand",
     "start:debug": "node --require ts-node/register --inspect-brk src/index.ts"
