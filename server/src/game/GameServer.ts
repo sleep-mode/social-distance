@@ -3,7 +3,14 @@ import { Connections } from './Connections';
 import { GameState } from './GameState';
 import { loop } from './loop';
 import { handleMessage } from './handler';
-import { updateCoinGeneration, updateCollision, broadcastState, updatePlayerLocation } from './updater';
+import {
+  updateCoinGeneration,
+  updateCoinCollision,
+  updatePersonCollision,
+  broadcastState,
+  updatePlayerLocation,
+  updatePlayerState,
+} from './updater';
 
 export class GameServer {
   constructor(
@@ -19,7 +26,14 @@ export class GameServer {
 
   private startLoop() {
     const { io, state } = this;
-    loop(updatePlayerLocation(state), updateCollision(state), updateCoinGeneration(state), broadcastState(state, io));
+    loop(
+      updatePlayerLocation(state),
+      updatePersonCollision(state),
+      updateCoinCollision(state),
+      updateCoinGeneration(state),
+      updatePlayerState(state),
+      broadcastState(state, io)
+    );
   }
 
   private handleConnect() {

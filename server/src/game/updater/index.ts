@@ -22,7 +22,7 @@ export function updatePlayerLocation(state: GameState) {
 /**
  * 충돌처리
  */
-export function updateCollision(state: GameState) {
+export function updatePersonCollision(state: GameState) {
   return () => {
     const players = Object.values(state.players).sort((a, b) => a.x - b.x);
 
@@ -49,22 +49,23 @@ export function updateCollision(state: GameState) {
             }
           }
         }
-      } else if (player.type === PlayerType.ZOMBIE) {
-        player.hp -= 0.5;
       }
+
+      /** default hp decresing */
+      player.hp -= 0.2;
     }
 
     for (const player of playersToBeDamaged) {
-      player.hp--;
-      if (player.hp <= 0) {
-        player.type = PlayerType.ZOMBIE;
-        player.hp = 100; // 다시 MAX_HP로
-      }
+      player.hp -= 2;
     }
+  };
+}
 
+export function updateCoinCollision(state: GameState) {
+  return () => {
     /** 코인 줍줍 */
     for (const coin of state.coins) {
-      for (const player of players) {
+      for (const player of Object.values(state.players)) {
         if (player.type === PlayerType.ZOMBIE) {
           continue;
         }
@@ -72,6 +73,24 @@ export function updateCollision(state: GameState) {
           state.coins.delete(coin);
           player.coin++;
         }
+      }
+    }
+  };
+}
+
+export function updatePlayerState(state: GameState) {
+  return () => {
+    for (const player of Object.values(state.players)) {
+      if (player.hp > 0) {
+        continue;
+      }
+
+      if (player.type === PlayerType.ALIVE) {
+        player.type = PlayerType.ZOMBIE;
+        player.hp = 100;
+      } else if (player.type === PlayerType.ZOMBIE) {
+        /** Remove player and  */
+        // state
       }
     }
   };
