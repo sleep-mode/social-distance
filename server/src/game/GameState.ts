@@ -1,8 +1,8 @@
-import { Player } from './entity/Player';
-import { Coin } from './entity/Coin';
+import { PlayerObject } from './entity/Player';
+import { Coin } from './model/Coin';
 
 export class GameState {
-  players: Record<string, Player>;
+  players: Record<string, PlayerObject>;
   coins: Set<Coin>;
   startedAt: number;
   lastCoinGeneratedAt: number;

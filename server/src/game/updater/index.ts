@@ -1,8 +1,10 @@
 import { GameState } from '../GameState';
 import { Server } from 'socket.io';
 import { config } from '../../config';
-import { Coin, createCoin } from '../entity/Coin';
-import { Player, PlayerType } from '../entity/Player';
+import { createCoin } from '../entity/Coin';
+import { PlayerObject } from '../entity/Player';
+import { PlayerType } from '../model/Player';
+import { Coin } from '../model/Coin';
 
 const MAX_COIN_COUNT = 30;
 
@@ -25,7 +27,7 @@ export function updateCollision(state: GameState) {
     const players = Object.values(state.players).sort((a, b) => a.x - b.x);
 
     /** HP 감소 */
-    const playersToBeDamaged: Player[] = [];
+    const playersToBeDamaged: PlayerObject[] = [];
     for (let i = 0; i < players.length; i++) {
       const player = players[i];
       if (player.type === PlayerType.ALIVE) {

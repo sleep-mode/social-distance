@@ -1,8 +1,4 @@
-export interface Coin {
-  x: number;
-  id: number;
-  amount: number;
-}
+import { Coin } from '../model/Coin';
 
 let coinId = 0;
 

@@ -1,42 +1,18 @@
 import { config } from '../../config';
+import { Character, Player, PlayerType } from '../model/Player';
 
-interface PlayerProps {
-  socketId: string;
-  nickname: string;
-  x: number;
-  y: number; // 거의 고정
-  hp?: number;
-  coin: number;
-  type?: PlayerType;
-  direction?: number; // 1 is right, 0 is left;
-}
-
-export enum PlayerType {
-  ALIVE,
-  DEAD,
-  ZOMBIE,
-}
-
-export class Player {
-  socketId: string;
-  nickname: string;
-  x: number;
-  y: number; // 거의 고정
-  coin: number;
-  hp: number;
-  type: PlayerType;
-  direction: number; // 1 is right, -1 is left;
-
-  constructor({ coin, direction = 1, nickname, socketId, x, y, type = PlayerType.ALIVE, hp = 100 }: PlayerProps) {
-    this.coin = coin;
-    this.direction = direction;
-    this.nickname = nickname;
-    this.socketId = socketId;
-    this.hp = hp;
-    this.x = x;
-    this.y = y;
-    this.type = type;
-  }
+export class PlayerObject implements Player {
+  constructor(
+    public socketId: string,
+    public nickname: string,
+    public x: number,
+    public y: number, // 거의 고정
+    public hp: number,
+    public coin: number,
+    public type: PlayerType,
+    public character: Character,
+    public direction: number // 1 is right, 0 is left;
+  ) {}
 
   changeDirection() {
     this.direction = this.direction * -1;
