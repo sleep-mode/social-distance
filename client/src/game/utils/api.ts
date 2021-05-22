@@ -24,8 +24,8 @@ const reqApi = axios.create({
   timeout: 5000
 });
 
-export async function getHighScores () { // get Top 5
-  let req = await reqApi.get(`/scores`);
+export async function getHighScores () {
+  let req = await reqApi.get(`/scores?limit=9`);
   return req.data.Items;
 }
 
