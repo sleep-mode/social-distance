@@ -55,6 +55,8 @@ export const Container = styled.div`
 `;
 
 export const Canvas = styled.canvas`
+  height: 100vh;
+  width: 100vw;
   position: fixed;
   top: 0;
   bottom: 0;
@@ -80,6 +82,7 @@ export const IntroModal = styled.div`
   transform: translate(-50%, -50%);
   animation-name: ${appearLate};
   animation-duration: 5s;
+  z-index: 1000;
 `;
 
 export const JunctionText = styled.text`

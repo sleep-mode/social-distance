@@ -32,7 +32,7 @@ export class World implements Drawable {
         if (!backgrounds) return;
 
         backgrounds.forEach((bg, index) => {
-            canvas.context.drawImage(bg, canvas.viewPort + index * bg.width, canvas.height - bg.height, bg.width, bg.height);
+            canvas.context.drawImage(bg, canvas.viewPort + index * bg.width, 0, bg.width, bg.height);
         });
     }
 }

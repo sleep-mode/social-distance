@@ -18,19 +18,15 @@ function prepare(id: string) {
   let canvasObj: Canvas;
   const canvas = c.getContext('2d')!;
 
-  const ratio: any = 1; //PIXEL_RATIO;
+  const ratio: any = 800 / screenHeight;
   c.width = screenWidth * ratio;
-  c.height = (screenHeight * ratio);
+  c.height = screenHeight * ratio;
 
-  // c.style.width = screenWidth + 'px';
-  // c.style.height = screenHeight + 'px';
-
-  canvas.setTransform(ratio, 0, 0, ratio, 0, 0);
   canvasObj = {
     context: canvas,
     viewPort: 0,
-    width: c.width / ratio,
-    height: c.height / ratio,
+    width: c.width,
+    height: c.height,
   };
   return canvasObj;
 }
