@@ -10,6 +10,12 @@ import {
   BestRecordModal,
   IntroModal,
   StartButton,
+  InfoIcon,
+  InjectorInfoIcon,
+  MaskInfoIcon,
+  InfoContent,
+  Price,
+  Shortcut,
 } from './components';
 import { startGame } from './game/app';
 import useTimer from 'easytimer-react-hook';
@@ -86,6 +92,22 @@ export const Main = ({ name, topRank, bestScore, setBestScore }) => {
           <Info title="Coin" value={'0'} coin />
         </Flex>
       </InfoModal>
+      <Flex justifyContent="center">
+        <InfoIcon>
+          <MaskInfoIcon />
+          <InfoContent>
+            <Price>10</Price>
+            <Shortcut>M</Shortcut>
+          </InfoContent>
+        </InfoIcon>
+        <InfoIcon>
+          <InjectorInfoIcon />
+          <InfoContent>
+            <Price>15</Price>
+            <Shortcut>H</Shortcut>
+          </InfoContent>
+        </InfoIcon>
+      </Flex>
       <InfoModal right="0%" padding="10px">
         <Flex flexDirection="column" margin="10px 10px">
           <BoldText fontSize="20px">{'Leaderboard'}</BoldText>
