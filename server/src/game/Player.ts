@@ -45,7 +45,7 @@ export class Player {
     if (this.type === PlayerType.ALIVE) {
       this.hp - amount;
       if (this.hp <= 0) {
-        this.type = PlayerType.CORONA;
+        this.type = PlayerType.ZOMBIE;
       }
     }
   }
