@@ -63,10 +63,10 @@ export class Game {
   handleKeyboard(event) {
     console.log('gotcha');
     if ((event.keyCode || event.which) === 32) {
+      send('playerDirection');
       if (this.myPlayer) {
         this.myPlayer.direction *= -1;
       }
-      send('playerDirection');
     }
   }
 
