@@ -1,16 +1,6 @@
 import { ctx } from './context';
 import { send } from './emit';
-import BackgroundImage from './assets/bg_1.png';
-
-async function loadImage(asset: any): Promise<HTMLImageElement> {
-  const image = new Image();
-  image.src = asset;
-  return new Promise(resolve => {
-    image.addEventListener('load', () => {
-      resolve(image);
-    });
-  });
-}
+import { World } from './world';
 
 let score = 0;
 
@@ -24,17 +14,28 @@ interface Player {
 }
 
 export class Game {
-  constructor(private readonly canvas: CanvasRenderingContext2D) {}
+  constructor(private readonly canvas: CanvasRenderingContext2D) {
+    this.world = new World(100);
+  }
   private initialized = false;
-  private bg?: HTMLImageElement;
   private frame: number = 60;
   private prevFrame: number = Date.now();
+  private world: World;
 
   public players: Player[] = [];
+  public myPlayer?: Player;
 
   public async start() {
-    this.bg = await loadImage(BackgroundImage);
+    await this.world.initialize();
+
+    this.players.forEach(player => {
+      if (player.socketId === ctx.clientId) {
+        this.myPlayer = player;
+      }
+    });
+
     this.initialized = true;
+
     window.addEventListener('keydown', this.handleKeyboard.bind(this));
     this.prevFrame = Date.now();
     this.update();
@@ -62,12 +63,10 @@ export class Game {
   handleKeyboard(event) {
     console.log('gotcha');
     if ((event.keyCode || event.which) === 32) {
-      this.players.forEach(player => {
-        if (player.socketId === ctx.clientId) {
-          player.direction *= -1;
-        }
-      })
       send('playerDirection');
+      if (this.myPlayer) {
+        this.myPlayer.direction *= -1;
+      }
     }
   }
 
@@ -75,7 +74,8 @@ export class Game {
     if (!this.initialized) {
       return;
     }
-    this.drawBackground();
+
+    this.world.draw(this.canvas);
     this.drawPlayers();
 
     this.canvas.fillStyle = '#FFF';
@@ -83,12 +83,6 @@ export class Game {
     const playerCount = Object.keys(this.players).length;
     this.canvas.fillText('Total players: ' + playerCount, 10, 10);
     this.canvas.fillText('Score: ' + score, 10, 20);
-  }
-
-  private drawBackground() {
-    if (this.bg != null) {
-      this.canvas.drawImage(this.bg, 0, 0, window.innerWidth, window.innerHeight);
-    }
   }
 
   private drawPlayers() {
