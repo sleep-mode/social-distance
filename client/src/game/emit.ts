@@ -1,9 +1,9 @@
 import { ctx } from './context';
-import { BufferUtil } from './utils/buffer-until';
+import { stringToBuffer } from './utils/buffer-until';
 
-export function emit(action: string, params: Record<string, string>) {
+export function send(action: string, params: Record<string, string> = {}) {
   ctx.socket.send(
-    BufferUtil().from(
+    stringToBuffer(
       JSON.stringify({
         action,
         params,

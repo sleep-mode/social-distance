@@ -57,23 +57,4 @@ export function startGame(name: string, host: string, port: string) {
 
   handleNetwork(socket, game);
   game.start();
-
-  //Start loop
-  // windowLoop();
 }
-
-//Check nick and start game
-// function checkNick() {
-//   if (validNick()) {
-//     startGame();
-//   } else {
-//     ctx.nickErrorText.style.display = 'inline';
-//   }
-// }
-
-//Check if nick is alphanumeric
-// function validNick() {
-//   const regex = /^\w*$/;
-//   console.log('Regex Test', regex.exec(ctx.playerNameInput.value));
-//   return regex.exec(ctx.playerNameInput.value) !== null;
-// }
