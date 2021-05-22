@@ -36,6 +36,19 @@ const BestRecord = ({ name, setBestRecord }) => {
   );
 };
 
+const Info = ({ title, value }) => {
+  return (
+    <Flex flexDirection="column" mb="12px">
+      <BoldText fontSize="20px" style={{ textShadow: '2px 2px 0 #000000' }}>
+        {title}
+      </BoldText>
+      <BoldText fontSize="40px" style={{ textShadow: '2px 2px 0 #000000' }}>
+        {value}
+      </BoldText>
+    </Flex>
+  );
+};
+
 export const Main = ({ name, topRank }) => {
   const [bestRecord, setBestRecord] = useState<boolean>(false);
   const [timer] = useTimer({
@@ -50,22 +63,20 @@ export const Main = ({ name, topRank }) => {
       {bestRecord && <BestRecord name={name} setBestRecord={setBestRecord} />}
       <InfoModal left="0%">
         <Flex flexDirection="column" padding="30px">
-          <BoldText fontSize="20px">{'Nickname'}</BoldText>
-          <BoldText fontSize="40px">{name}</BoldText>
-          <BoldText fontSize="20px">{'Time'}</BoldText>
-          <BoldText fontSize="40px">{timer.getTimeValues().toString(['minutes', 'seconds', 'secondTenths'])}</BoldText>
-          <BoldText fontSize="20px">{'Best Time'}</BoldText>
-          <BoldText fontSize="40px">{'--:--:-'}</BoldText>
-          <BoldText fontSize="20px">{'Coin'}</BoldText>
-          <BoldText fontSize="40px">{'???'}</BoldText>
+          <Info title="Nickname" value={name} />
+          <Info title="Time" value={timer.getTimeValues().toString(['minutes', 'seconds', 'secondTenths'])} />
+          <Info title="Best Time" value={'--:--:-'} />
+          <Info title="Coin" value={'???'} />
         </Flex>
       </InfoModal>
       <InfoModal right="0%" padding="10px">
-        <Flex flexDirection="column">
+        <Flex flexDirection="column" margin="10px 10px">
           <BoldText fontSize="20px">{'Leaderboard'}</BoldText>
-          {topRank?.map((record: { name: string; score: string }, idx: number) => {
-            return <Record key={idx} rank={idx + 1} id={record.name} time={record.score} />;
-          })}
+          <Flex flexDirection="column" mt="20px">
+            {topRank?.map((record: { name: string; score: string }, idx: number) => {
+              return <Record key={idx} rank={idx + 1} id={record.name} time={record.score} />;
+            })}
+          </Flex>
         </Flex>
       </InfoModal>
       <StartImage />

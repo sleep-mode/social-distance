@@ -82,6 +82,25 @@ export const IntroModal = styled.div`
   animation-duration: 5s;
 `;
 
+export const JunctionText = styled.text`
+  height: 30px;
+  position: absolute;
+  text-shadow: 2px 2px 10px #000000;
+  font-family: Quicksand;
+  font-size: 34px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: 1px;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #e5f3cd;
+  animation-name: ${disappearLate};
+  animation-duration: 5s;
+`;
+
 export const TeamText = styled.text`
   width: 218px;
   height: 30px;
@@ -168,7 +187,7 @@ export const StyledInput = styled.input`
   width: 92%;
   height: 70px;
   padding: 0px 20px;
-  margin: 0px 0 30px;
+  margin: 10px 0 30px;
   border-radius: 10px;
   border: solid 1px #a2ff00;
   caret-color: #a2ff00;
@@ -187,14 +206,12 @@ export const BoldText = styled.text`
   font-family: Quicksand;
   font-size: 30px;
   font-weight: bold;
-  margin-bottom: 5px;
   font-stretch: normal;
   font-style: normal;
   line-height: normal;
   letter-spacing: normal;
   color: #dfdfdf;
   ${typography}
-  ${space}
 `;
 
 export const Text = styled.text<TypographyProps & ColorProps & SpaceProps>`
@@ -206,11 +223,12 @@ export const Text = styled.text<TypographyProps & ColorProps & SpaceProps>`
 
 export const InfoModal = styled.div<PositionProps & SpaceProps>`
   width: 270px;
-  height: 400px;
+  height: 420px;
   background-color: #143c41;
   position: absolute;
   overflow: hidden;
   top: 0%;
+  opacity: 0.7;
   ${space}
   ${position}
 `;

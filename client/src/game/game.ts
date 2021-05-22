@@ -43,7 +43,7 @@ export class Game {
         this.coins[coin.id] = new CoinObject(coin);
       }
     }
-    
+
     const ids = coins.map(coin => coin.id);
     for (const id of Object.keys(this.coins)) {
       if (!ids.includes(Number(id))) {
@@ -147,12 +147,12 @@ export class Game {
   }
 
   drawInfo() {
-    const context = this.canvas.context;
+    // const context = this.canvas.context;
 
-    context.fillStyle = '#FFF';
-    context.font = '12px Tahoma';
-    const playerCount = Object.keys(this.players).length;
-    context.fillText('Total players: ' + playerCount, 10, 10);
-    context.fillText('Score: ' + score, 10, 20);
+    // context.fillStyle = '#FFF';
+    // context.font = '12px Tahoma';
+    // const playerCount = Object.keys(this.players).length;
+    // context.fillText('Total players: ' + playerCount, 10, 10);
+    // context.fillText('Score: ' + score, 10, 20);
   }
 }
