@@ -43,7 +43,8 @@ export const Intro = ({ name, setName, setDisplayIntro, topRank }) => {
   const [characterIndex, setCharacterIndex] = useState(random(0, CHARACTER_LENGTH));
   const handleStart = useCallback(() => {
     setTimeout(() => {
-      startGame(name, 'server.sleep-mode.io', characterIndex);
+      /* startGame(name, 'server.sleep-mode.io', characterIndex); */
+      startGame(name, 'localhost:5000', characterIndex);
     }, 3000);
   }, [name, characterIndex]);
 

@@ -54,7 +54,8 @@ export function startGame(name: string, host: string, characterIndex?: number) {
   ctx.playerName = name;
 
   //Set up socket
-  const socket = io(`https://${host}`, { secure: true, transports: ['websocket'] });
+  // const socket = io(`https://${host}`, { secure: true, transports: ['websocket'] });
+  const socket = io(`http://${host}`, { transports: ['websocket'] });
   ctx.socket = socket;
 
   handleNetwork(socket, game, name, characterIndex);

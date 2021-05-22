@@ -16,6 +16,9 @@ export function handleNetwork(socket: Socket, game: Game, name: string, characte
         game.syncPlayers(params.players);
         game.syncCoins(params.coins);
       }
+      if (event === 'DEAD') {
+        alert('You are dead');
+      }
     });
 
     socket.on('close', function () {});

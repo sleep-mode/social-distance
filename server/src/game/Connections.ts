@@ -4,7 +4,10 @@ import { config } from '../config';
 export class Connections {
   private maxConnection = 20;
 
-  constructor(private readonly io: Server, private readonly connections: Record<string, Socket> = {}) {}
+  constructor(
+    private readonly io: Server,
+    private readonly connections: Record<string, Socket> = {}
+  ) {}
 
   public add(socket: Socket) {
     // if (this.connections.size >= this.maxConnection) {
@@ -16,6 +19,10 @@ export class Connections {
     //     code: 'MAX_CONNECTION_EXCEED',
     //   });
     // }
+  }
+
+  public getSocketById(socketId: string): Socket | undefined {
+    return this.connections[socketId];
   }
 
   public remove(socket: Socket) {

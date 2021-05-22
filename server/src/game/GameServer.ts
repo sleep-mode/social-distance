@@ -25,13 +25,13 @@ export class GameServer {
   }
 
   private startLoop() {
-    const { io, state } = this;
+    const { io, state, connections } = this;
     loop(
       updatePlayerLocation(state),
       updatePersonCollision(state),
       updateCoinCollision(state),
       updateCoinGeneration(state),
-      updatePlayerState(state),
+      updatePlayerState(state, connections),
       broadcastState(state, io)
     );
   }

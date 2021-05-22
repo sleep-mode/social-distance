@@ -5,6 +5,7 @@ import { createCoin } from '../entity/Coin';
 import { PlayerObject } from '../entity/Player';
 import { PlayerType } from '../model/Player';
 import { Coin } from '../model/Coin';
+import { Connections } from '../Connections';
 
 const MAX_COIN_COUNT = 30;
 
@@ -81,7 +82,7 @@ export function updateCoinCollision(state: GameState) {
   };
 }
 
-export function updatePlayerState(state: GameState) {
+export function updatePlayerState(state: GameState, connections: Connections) {
   return () => {
     for (const player of Object.values(state.players)) {
       if (player.hp > 0) {
@@ -93,6 +94,7 @@ export function updatePlayerState(state: GameState) {
         player.hp = 100;
       } else if (player.type === PlayerType.ZOMBIE) {
         player.type = PlayerType.DEAD;
+        connections.getSocketById(player.socketId)?.send('DEAD');
       }
     }
   };
