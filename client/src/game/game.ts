@@ -24,8 +24,6 @@ export class Game {
   }
 
   public async start() {
-    await this.world.initialize();
-
     this.initialized = true;
 
     window.addEventListener('keydown', this.handleKeyboard.bind(this));
@@ -95,19 +93,17 @@ export class Game {
     const myPlayer = this.players[ctx.clientId];
     if (myPlayer) {
       // TODO: use config
-      canvas.viewPort = -Math.max(0, Math.min(myPlayer.getPlayer().x - canvas.width / 2, 1600 - canvas.width));
+      canvas.viewPort = -Math.max(0, Math.min(myPlayer.getPlayer().x - canvas.width / 2, 8000 - canvas.width));
     }
   }
 
   handleKeyboard(event) {
     if ((event.keyCode || event.which) === 32) {
-      /*
       const myPlayer = this.players[ctx.clientId];
       if (myPlayer) {
         // known bug: if you revert direction first and press start again, it will not work
         myPlayer.getPlayer().direction *= -1;
       }
-      */
       send('CHANGE_DIRECTION');
     }
   }
