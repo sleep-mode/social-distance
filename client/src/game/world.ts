@@ -1,13 +1,12 @@
 import BackgroundImage from './assets/bg_1.png';
+import { Drawable } from './drawable';
 
-export class World {
+export class World implements Drawable {
     private bg?: HTMLImageElement;
-    private readonly canvas: CanvasRenderingContext2D;
     private width: number;
     private initialized: boolean;
 
-    constructor(canvas: CanvasRenderingContext2D, width: number) {
-        this.canvas = canvas;
+    constructor(width: number) {
         this.width = width;
         this.initialized = false;
     }
@@ -27,11 +26,11 @@ export class World {
         });
     }
 
-    public render(position: number) {
+    draw = (canvas: CanvasRenderingContext2D) => {
         if (!this.initialized) return;
 
         if (this.bg != null) {
-            this.canvas.drawImage(this.bg, 0, 0, window.innerWidth, window.innerHeight);
+            canvas.drawImage(this.bg, 0, 0, window.innerWidth, window.innerHeight);
         }
     }
 }

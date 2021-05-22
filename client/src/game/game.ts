@@ -1,17 +1,6 @@
 import { ctx } from './context';
 import { send } from './emit';
-import BackgroundImage from './assets/bg_1.png';
 import { World } from './world';
-
-async function loadImage(asset: any): Promise<HTMLImageElement> {
-  const image = new Image();
-  image.src = asset;
-  return new Promise(resolve => {
-    image.addEventListener('load', () => {
-      resolve(image);
-    });
-  });
-}
 
 let score = 0;
 
@@ -26,19 +15,27 @@ interface Player {
 
 export class Game {
   constructor(private readonly canvas: CanvasRenderingContext2D) {
-    this.world = new World(canvas, 100);
+    this.world = new World(100);
   }
   private initialized = false;
-  private bg?: HTMLImageElement;
   private frame: number = 60;
   private prevFrame: number = Date.now();
   private world: World;
 
   public players: Player[] = [];
+  public myPlayer?: Player;
 
   public async start() {
     await this.world.initialize();
+
+    this.players.forEach(player => {
+      if (player.socketId === ctx.clientId) {
+        this.myPlayer = player;
+      }
+    });
+
     this.initialized = true;
+
     window.addEventListener('keydown', this.handleKeyboard.bind(this));
     this.prevFrame = Date.now();
     this.update();
@@ -66,11 +63,9 @@ export class Game {
   handleKeyboard(event) {
     console.log('gotcha');
     if ((event.keyCode || event.which) === 32) {
-      this.players.forEach(player => {
-        if (player.socketId === ctx.clientId) {
-          player.direction *= -1;
-        }
-      })
+      if (this.myPlayer) {
+        this.myPlayer.direction *= -1;
+      }
       send('playerDirection');
     }
   }
@@ -79,7 +74,8 @@ export class Game {
     if (!this.initialized) {
       return;
     }
-    this.world.render(0);
+
+    this.world.draw(this.canvas);
     this.drawPlayers();
 
     this.canvas.fillStyle = '#FFF';
