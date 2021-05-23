@@ -116,26 +116,35 @@ export class Game {
   }
 
   handleKeyboard(event) {
+    const myPlayer = this.players[ctx.clientId];
     if ((event.keyCode || event.which) === 32) {
-      const myPlayer = this.players[ctx.clientId];
       if (myPlayer) {
-        // known bug: if you revert direction first and press start again, it will not work
         myPlayer.getPlayer().direction *= -1;
       }
       send('CHANGE_DIRECTION');
     }
     if ((event.keyCode || event.which) === 38) {
-      const myPlayer = this.players[ctx.clientId];
       if (myPlayer) {
-        // known bug: if you revert direction first and press start again, it will not work
         myPlayer.jump();
       }
       send('JUMP');
     }
     if ((event.keyCode || event.which) === 77) {
+      if (myPlayer) {
+        if (myPlayer.getPlayer().coin >= 10) {
+          triggerSound('mask');
+          myPlayer.getPlayer().coin -= 10;
+        }
+      }
       send('MASK');
     }
     if ((event.keyCode || event.which) === 72) {
+      if (myPlayer) {
+        if (myPlayer.getPlayer().coin >= 15) {
+          triggerSound('mask');
+          myPlayer.getPlayer().coin -= 15;
+        }
+      }
       send('HEAL');
     }
     if ((event.keyCode || event.which) === 82) {
