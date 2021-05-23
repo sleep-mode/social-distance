@@ -138,12 +138,17 @@ export class Game {
     if ((event.keyCode || event.which) === 72) {
       send('HEAL');
     }
+    if ((event.keyCode || event.which) === 82) {
+      send('RESTART');
+    }
   }
 
   draw() {
     if (!this.initialized) {
       return;
     }
+
+    if (!ctx || !ctx.clientId || !this.players[ctx.clientId]) return;
 
     this.flush(this.objectCanvas);
     this.drawObjects();
