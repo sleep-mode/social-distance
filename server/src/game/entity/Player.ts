@@ -2,6 +2,8 @@ import { config } from '../../config';
 import { Character, Player, PlayerType } from '../model/Player';
 
 export class PlayerObject implements Player {
+  public deadAt = Number.MAX_SAFE_INTEGER;
+
   constructor(
     public socketId: string,
     public nickname: string,
@@ -14,6 +16,10 @@ export class PlayerObject implements Player {
     public character: Character,
     public direction: number // 1 is right, 0 is left;
   ) {}
+
+  needToBeDisconnected(seconds = 10) {
+    return Date.now() - this.deadAt > seconds * 1000;
+  }
 
   changeDirection() {
     this.direction = this.direction * -1;

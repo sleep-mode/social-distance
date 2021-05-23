@@ -95,7 +95,12 @@ export function updatePlayerState(state: GameState, connections: Connections) {
         player.hp = 100;
       } else if (player.type === PlayerType.ZOMBIE) {
         player.type = PlayerType.DEAD;
+        player.deadAt = Date.now();
         connections.getSocketById(player.socketId)?.send('DEAD');
+      } else {
+        if (player.needToBeDisconnected(30)) {
+          connections.getSocketById(player.socketId)?.send('DISCONNECT');
+        }
       }
     }
   };
