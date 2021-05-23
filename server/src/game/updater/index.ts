@@ -7,7 +7,7 @@ import { PlayerType } from '../model/Player';
 import { Coin } from '../model/Coin';
 import { Connections } from '../Connections';
 
-const MAX_COIN_COUNT = 30;
+const MAX_COIN_COUNT = 20;
 
 /**
  * 플레이어 위치 업데이트
@@ -55,7 +55,7 @@ export function updatePersonCollision(state: GameState) {
 
       /** default hp decresing */
       /** Zombie loose more */
-      player.hp -= player.type === PlayerType.ALIVE ? 0.2 : 0.5;
+      player.hp -= player.type === PlayerType.ALIVE ? 0.3 : 0.5;
     }
 
     for (const player of playersToBeDamaged) {
@@ -125,7 +125,7 @@ export function broadcastState(state: GameState, io: Server) {
  */
 function shouldGenerateCoin(state: GameState) {
   const now = Date.now();
-  if (now - state.lastCoinGeneratedAt > 3000) {
+  if (now - state.lastCoinGeneratedAt > 8000) {
     state.lastCoinGeneratedAt = now;
     return true;
   } else {

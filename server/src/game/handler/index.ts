@@ -3,6 +3,7 @@ import { GameState } from '../GameState';
 import { Server } from 'socket.io';
 import { PlayerObject } from '../entity/Player';
 import { PlayerType, Character } from '../model/Player';
+import { config } from '../../config';
 
 /* ---------------------------------------------------------- *
  *
@@ -29,7 +30,7 @@ export function handleMessage({ state }: Dependencies, { action, params, socketI
     const player = new PlayerObject(
       socketId,
       params.name ?? '',
-      0,
+      Math.random() * config.mapWidth,
       0,
       100,
       false,
@@ -54,7 +55,7 @@ export function handleMessage({ state }: Dependencies, { action, params, socketI
       player.mask = true;
       setTimeout(() => {
         player.mask = false;
-      }, 10000);
+      }, 5000);
     }
   }
 
