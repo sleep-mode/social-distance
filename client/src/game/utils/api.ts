@@ -7,7 +7,7 @@ const reqApi = axios.create({
 });
 
 export async function getHighScores () {
-  let req = await reqApi.get(`/scores?limit=3`);
+  let req = await reqApi.get(`/scores?limit=9`);
   return req.data.Items.map(item => {
     return { name: item.name, time: decodeScore(item.score)}
   });

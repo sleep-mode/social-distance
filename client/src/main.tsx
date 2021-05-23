@@ -35,7 +35,7 @@ const BestRecord = ({ name, bestScore, endGame, timer }) => {
             postScore(name, bestScore);
             endGame(false);
             timer.reset();
-            startGame(name, 'localhost:5000', endGame);
+            startGame(name, 'server.sleep-mode.io', endGame);
           }}
         >
           Try Again [R]

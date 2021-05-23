@@ -3,9 +3,6 @@ import { ctx } from './context';
 import { Game } from './game';
 
 export function handleNetwork(socket: Socket, game: Game, name: string, endGame: (end: boolean) => void, characterIndex?: number) {
-  //Network callback
-  console.log('HandleNetwork!');
-
   socket.on('connect', function () {
     ctx.clientId = socket.id;
     /** Send를 보내야 서버에서 캐릭터를 생성 */
