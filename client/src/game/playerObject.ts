@@ -113,6 +113,11 @@ export class PlayerObject implements Drawable {
       spriteSize.x,
       spriteSize.y
     );
+
+    context.font = '24px Quicksand';
+    context.fillStyle = '#0a272a';
+    context.textAlign = 'center';
+    context.fillText(this.player.nickname, x + spriteSize.x / 2, Math.round(y) - spriteSize.y / 2);
   };
 
   private getSpriteOffset() {
