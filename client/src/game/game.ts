@@ -54,7 +54,15 @@ export class Game {
         setTimeout(() => {
           delete this.disappearingCoins[id];
         }, disappearTime * 1000);
-        triggerSound('coin');
+
+        if (ctx && ctx.clientId) {
+          const myPlayer = this.players[ctx.clientId];
+          if (myPlayer) {
+            if (coin.coin.x >= Math.max(0, myPlayer.getPlayer().x - this.canvas.width / 2) && coin.coin.x <= Math.min(8000, myPlayer.getPlayer().x + this.canvas.width / 2)) {
+              triggerSound('coin');
+            }
+          }
+        }
       }
     }
   }
