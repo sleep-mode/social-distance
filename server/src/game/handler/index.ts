@@ -72,13 +72,13 @@ export function handleMessage({ state }: Dependencies, { action, params, socketI
     const player = new PlayerObject(
       socketId,
       original?.nickname ?? '',
-      0,
+      Math.random() * config.mapWidth,
       0,
       100,
       false,
       0,
       PlayerType.ALIVE,
-      params.characterIndex ?? pickRandomCharacter(),
+      original?.character ?? pickRandomCharacter(),
       1
     );
 
