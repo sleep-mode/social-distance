@@ -41,7 +41,7 @@ function prepare(id: string) {
   return canvasObj;
 }
 
-export function startGame(name: string, host: string, characterIndex?: number) {
+export function startGame(name: string, host: string, endGame: (end: boolean) => void, characterIndex?: number) {
   const canvas = prepare('cvs');
   const objectCanvas = prepare('ocvs');
   if (canvas == null || objectCanvas == null) {
@@ -58,6 +58,6 @@ export function startGame(name: string, host: string, characterIndex?: number) {
   const socket = io(`http://${host}`, { transports: ['websocket'] });
   ctx.socket = socket;
 
-  handleNetwork(socket, game, name, characterIndex);
+  handleNetwork(socket, game, name, endGame, characterIndex);
   game.start();
 }

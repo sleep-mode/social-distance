@@ -2,7 +2,7 @@ import { Socket } from 'socket.io-client';
 import { ctx } from './context';
 import { Game } from './game';
 
-export function handleNetwork(socket: Socket, game: Game, name: string, characterIndex?: number) {
+export function handleNetwork(socket: Socket, game: Game, name: string, endGame: (end: boolean) => void, characterIndex?: number) {
   //Network callback
   console.log('HandleNetwork!');
 
@@ -17,7 +17,7 @@ export function handleNetwork(socket: Socket, game: Game, name: string, characte
         game.syncCoins(params.coins);
       }
       if (event === 'DEAD') {
-        alert('You are dead');
+        endGame(true);
       }
     });
 

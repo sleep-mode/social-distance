@@ -38,13 +38,13 @@ const CharacterSelection = ({ index }) => {
 
 const random = (min, max) => Math.floor(Math.random() * (max - min)) + min;
 
-export const Intro = ({ name, setName, setDisplayIntro, topRank }) => {
+export const Intro = ({ name, setName, setDisplayIntro, topRank, endGame }) => {
   const CHARACTER_LENGTH = Object.keys(CHARACTERS).length;
   const [characterIndex, setCharacterIndex] = useState(random(0, CHARACTER_LENGTH));
   const handleStart = useCallback(() => {
     setTimeout(() => {
       /* startGame(name, 'server.sleep-mode.io', characterIndex); */
-      startGame(name, 'localhost:5000', characterIndex);
+      startGame(name, 'localhost:5000', endGame, characterIndex);
     }, 3000);
   }, [name, characterIndex]);
 
@@ -73,6 +73,7 @@ export const Intro = ({ name, setName, setDisplayIntro, topRank }) => {
               placeholder={'Enter player name'}
               value={name}
               onChange={e => setName(e.target.value)}
+              maxLength={14}
               onKeyPress={e => {
                 if (e.key === 'Enter') {
                   !name && setName('후치');

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Record } from './record';
 import {
   StartImage,
@@ -22,26 +22,25 @@ import useTimer from 'easytimer-react-hook';
 import { encodeScore, decodeScore } from './game/utils/helpers';
 import { postScore } from './game/utils/api';
 
-const BestRecord = ({ name, bestScore, setIsBestScore }) => {
+const BestRecord = ({ name, bestScore, endGame, timer }) => {
   return (
     <BestRecordModal>
-      <IntroModal>
-        <FormContainer width="500px">
-          <BoldText style={{ alignSelf: 'center' }}>Best Time:</BoldText>
-          <BoldText fontSize="60px" style={{ alignSelf: 'center' }}>
-            {bestScore}
-          </BoldText>
-          <StartButton
-            onClick={() => {
-              postScore(name, bestScore);
-              setIsBestScore(false);
-              startGame(name, 'server.sleep-mode.io');
-            }}
-          >
-            Try Again [R]
-          </StartButton>
-        </FormContainer>
-      </IntroModal>
+      <FormContainer width="500px">
+        <BoldText style={{ alignSelf: 'center' }}>Best Time:</BoldText>
+        <BoldText fontSize="60px" style={{ alignSelf: 'center' }}>
+          {bestScore}
+        </BoldText>
+        <StartButton
+          onClick={() => {
+            postScore(name, bestScore);
+            endGame(false);
+            timer.reset();
+            startGame(name, 'localhost:5000', endGame);
+          }}
+        >
+          Try Again [R]
+        </StartButton>
+      </FormContainer>
     </BestRecordModal>
   );
 };
@@ -59,27 +58,29 @@ const Info = ({ title, value, coin = false }) => {
   );
 };
 
-export const Main = ({ name, topRank, bestScore, setBestScore }) => {
-  const [isBestScore, setIsBestScore] = useState<boolean>(false);
+export const Main = ({ name, topRank, bestScore, setBestScore, endGame, gameEnded }) => {
   const [timer] = useTimer({
     precision: 'secondTenths',
   });
   const [displayView, setDisplayView] = useState(true);
+  useEffect(() => {
+    timer.reset();
+  }, [gameEnded]);
   setTimeout(() => {
     timer.start();
     setDisplayView(false);
   }, 3000);
-  /* -> onGameEnd
-    const currScore = timer.getTimeValues().toString(['minutes', 'seconds', 'secondTenths'])
-    if (encodeScore(currScore) > encodeScore(bestScore)) {
+  if (gameEnded) {
+    timer.pause();
+    const currScore = timer.getTimeValues().toString(['minutes', 'seconds', 'secondTenths']);
+    if (!bestScore || encodeScore(currScore) > encodeScore(bestScore)) {
       setBestScore(currScore);
-      setIsBestScore(true);
     }
+  }
 
-  */
   return (
     <div>
-      {isBestScore && <BestRecord name={name} bestScore={bestScore} setIsBestScore={setIsBestScore} />}
+      {gameEnded && <BestRecord name={name} bestScore={bestScore} endGame={endGame} timer={timer} />}
       {displayView && <Dim />}
       <InfoModal left="0%">
         <Flex flexDirection="column" padding="30px">
