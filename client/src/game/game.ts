@@ -58,7 +58,7 @@ export class Game {
         if (ctx && ctx.clientId) {
           const myPlayer = this.players[ctx.clientId];
           if (myPlayer) {
-            if (coin.coin.x >= Math.max(0, myPlayer.getPlayer().x - this.canvas.width / 2) && coin.coin.x <= Math.min(8000, myPlayer.getPlayer().x + this.canvas.width / 2)) {
+            if (coin.getCoin().x >= Math.max(0, myPlayer.getPlayer().x - this.canvas.width / 2) && coin.getCoin().x <= Math.min(8000, myPlayer.getPlayer().x + this.canvas.width / 2)) {
               triggerSound('coin');
             }
           }
@@ -173,15 +173,33 @@ export class Game {
   }
 
   drawObjects() {
+    const myPlayer = this.players[ctx.clientId];
+    const myPlayerX = myPlayer.getPlayer().x;
+    const bufferSize = this.objectCanvas.width * 2;
+
     this.world.draw(this.canvas);
     for (const key in this.coins) {
-      this.coins[key].draw(this.objectCanvas);
+      const coin = this.coins[key];
+      if (coin.getCoin().x >= myPlayerX - bufferSize && coin.getCoin().x <= myPlayerX + bufferSize) {
+        coin.draw(this.objectCanvas);
+      }
     }
     for (const key in this.disappearingCoins) {
-      this.disappearingCoins[key].draw(this.objectCanvas);
+      const coin = this.disappearingCoins[key];
+      if (coin.getCoin().x >= myPlayerX - bufferSize && coin.getCoin().x <= myPlayerX + bufferSize) {
+        coin.draw(this.objectCanvas);
+      }
     }
     for (const key in this.players) {
-      this.players[key].draw(this.objectCanvas);
+      if (key === ctx.clientId) continue;
+
+
+      const player = this.players[key];
+      if (player.getPlayer().x >= myPlayerX - bufferSize && player.getPlayer().x <= myPlayerX + bufferSize) {
+        player.draw(this.objectCanvas);
+      }
     }
+
+    myPlayer.draw(this.objectCanvas);
   }
 }

@@ -27,6 +27,10 @@ export class CoinObject implements Drawable {
         this.disappearing = false;
     }
 
+    public getCoin() {
+        return this.coin;
+    }
+
     public sync(coin: Coin) {
         this.coin = coin;
     }
