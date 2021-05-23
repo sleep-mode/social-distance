@@ -138,9 +138,6 @@ export class Game {
     if ((event.keyCode || event.which) === 72) {
       send('HEAL');
     }
-    if ((event.keyCode || event.which) === 82) {
-      send('RESTART');
-    }
   }
 
   draw() {

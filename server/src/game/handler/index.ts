@@ -65,6 +65,25 @@ export function handleMessage({ state }: Dependencies, { action, params, socketI
       player.hp = 100;
     }
   }
+
+  if (action === 'RESTART') {
+    const original = state.players[socketId];
+    const player = new PlayerObject(
+      socketId,
+      original?.nickname ?? '',
+      0,
+      0,
+      100,
+      false,
+      0,
+      PlayerType.ALIVE,
+      params.characterIndex ?? pickRandomCharacter(),
+      1
+    );
+
+    delete state.players[socketId];
+    state.players[socketId] = player;
+  }
 }
 
 function pickRandomCharacter() {

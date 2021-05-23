@@ -56,6 +56,7 @@ export function updatePersonCollision(state: GameState) {
       /** default hp decresing */
       /** Zombie loose more */
       player.hp -= player.type === PlayerType.ALIVE ? 0.2 : 0.5;
+      // player.hp -= player.type === PlayerType.ALIVE ? 2 : 5;
     }
 
     for (const player of playersToBeDamaged) {

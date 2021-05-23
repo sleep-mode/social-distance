@@ -17,10 +17,11 @@ import {
   Price,
   Shortcut,
 } from './components';
-import { startGame } from './game/app';
 import useTimer from 'easytimer-react-hook';
-import { encodeScore, decodeScore } from './game/utils/helpers';
+import { encodeScore } from './game/utils/helpers';
 import { postScore } from './game/utils/api';
+import { send } from './game/emit';
+import { amountRenderer } from './game/amount';
 
 const BestRecord = ({ name, bestScore, endGame, timer }) => {
   return (
@@ -35,10 +36,11 @@ const BestRecord = ({ name, bestScore, endGame, timer }) => {
             postScore(name, bestScore);
             endGame(false);
             timer.reset();
-            startGame(name, 'server.sleep-mode.io', endGame);
+            amountRenderer.setZero();
+            send('RESTART');
           }}
         >
-          Try Again [R]
+          Try Again
         </StartButton>
       </FormContainer>
     </BestRecordModal>
