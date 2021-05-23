@@ -7,7 +7,7 @@ import { PlayerType } from '../model/Player';
 import { Coin } from '../model/Coin';
 import { Connections } from '../Connections';
 
-const MAX_COIN_COUNT = 20;
+const MAX_COIN_COUNT = 30;
 
 /**
  * 플레이어 위치 업데이트
@@ -142,7 +142,7 @@ function generateCoins(state: GameState): Coin[] {
     return [];
   }
 
-  const COIN_GENERATION_COUNT = 5;
+  const COIN_GENERATION_COUNT = Object.keys(state.players).length * 2;
   const coins: Coin[] = [];
 
   for (let i = 0; i < COIN_GENERATION_COUNT; i++) {
