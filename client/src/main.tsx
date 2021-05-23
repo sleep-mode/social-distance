@@ -98,17 +98,9 @@ export const Main = ({ name, topRank, bestScore, setBestScore, endGame, gameEnde
       <Flex justifyContent="center">
         <InfoIcon>
           <MaskInfoIcon />
-          <InfoContent>
-            <Price>10</Price>
-            <Shortcut>M</Shortcut>
-          </InfoContent>
         </InfoIcon>
         <InfoIcon>
           <InjectorInfoIcon />
-          <InfoContent>
-            <Price>15</Price>
-            <Shortcut>H</Shortcut>
-          </InfoContent>
         </InfoIcon>
       </Flex>
       <InfoModal right="0%" padding="10px">
