@@ -4,7 +4,7 @@ import { Game } from './game';
 import { ctx } from './context';
 import { handleNetwork } from './handleNetwork';
 import { Canvas } from './canvas';
-import { playBGM } from './utils/audio';
+
 
 let screenWidth = (window as any).innerWidth;
 let screenHeight = (window as any).innerHeight;
@@ -38,6 +38,7 @@ function prepare(id: string) {
     width: c.width,
     height: c.height,
   };
+
   return canvasObj;
 }
 
@@ -49,13 +50,12 @@ export function startGame(name: string, host: string, endGame: (end: boolean) =>
   }
 
   const game = new Game(canvas, objectCanvas);
-  playBGM();
 
   ctx.playerName = name;
 
   //Set up socket
-  // const socket = io(`https://${host}`, { secure: true, transports: ['websocket'] });
-  const socket = io(`http://${host}`, { transports: ['websocket'] });
+  const socket = io(`https://${host}`, { secure: true, transports: ['websocket'] });
+  // const socket = io(`http://${host}`, { transports: ['websocket'] });
   ctx.socket = socket;
 
   handleNetwork(socket, game, name, endGame, characterIndex);
