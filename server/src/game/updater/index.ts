@@ -142,7 +142,7 @@ function generateCoins(state: GameState): Coin[] {
     return [];
   }
 
-  const COIN_GENERATION_COUNT = Object.keys(state.players).length * 2;
+  const COIN_GENERATION_COUNT = Object.keys(state.players).length * 2 + 4;
   const coins: Coin[] = [];
 
   for (let i = 0; i < COIN_GENERATION_COUNT; i++) {
